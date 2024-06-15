@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>EasySchedule</artifactId>
+  <artifactId>easyschedule</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>EasySchedule</name>
 
@@ -86,7 +86,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.easyschedule/com.example.easyschedule.HelloApplication</mainClass>
+              <mainClass>com.example.easyschedule/com.example.easyschedule.App</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
