@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocacaoQuadraDao {
+public class LocacaoQuadraDAO {
     private DatabaseConfig databaseConfig;
 
     public LocacaoQuadraDao() {

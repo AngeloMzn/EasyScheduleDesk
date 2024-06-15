@@ -1,5 +1,6 @@
 package com.example.easyschedule.model.LocacaoQuadra;
 
+import com.example.easyschedule.model.Locatario.Locatario;
 import com.example.easyschedule.model.QuadraEsportiva.QuadraEsportiva;
 
 import java.time.LocalDateTime;

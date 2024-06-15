@@ -5,7 +5,7 @@ public class QuadraEsportiva {
     String nome;
     String tipo;
     Double precoPorHora;
-    Locador dono
+    Locador dono;
     public QuadraEsportiva(String nome, String tipo, double precoPorHora, Locador dono) {
         this.nome = nome;
         this.tipo = tipo;

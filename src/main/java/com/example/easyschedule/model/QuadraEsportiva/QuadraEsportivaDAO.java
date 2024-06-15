@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuadraEsportivaDao {
+public class QuadraEsportivaDAO {
     private DatabaseConfig databaseConfig;
 
     public QuadraEsportivaDao() {
