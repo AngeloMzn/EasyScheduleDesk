@@ -8,6 +8,7 @@ public class QuadraEsportiva {
     String tipo;
     Double precoPorHora;
     Locador dono;
+    boolean disponivel;
     public QuadraEsportiva(String nome, String tipo, double precoPorHora, Locador dono) {
         this.nome = nome;
         this.tipo = tipo;

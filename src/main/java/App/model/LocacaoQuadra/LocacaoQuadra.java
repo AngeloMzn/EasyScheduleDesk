@@ -1,6 +1,8 @@
-package com.example.easyschedule.model.LocacaoQuadra;
+package App.model.LocacaoQuadra;
 
-import com.example.easyschedule.model.QuadraEsportiva.QuadraEsportiva;
+import App.model.Locatario.Locatario;
+import App.model.QuadraEsportiva.QuadraEsportiva;
+
 
 import java.time.LocalDateTime;
 
@@ -30,11 +32,11 @@ public class LocacaoQuadra {
         this.quadra = quadra;
     }
 
-    public String getLocatario() {
+    public Locatario getLocatario() {
         return locatario;
     }
 
-    public void setLocatario(String locatario) {
+    public void setLocatario(Locatario locatario) {
         this.locatario = locatario;
     }
 

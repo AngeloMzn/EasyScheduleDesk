@@ -26,7 +26,7 @@ public class QuadraEsportivaDAO {
             statement.setString(2, quadra.getTipo());
             statement.setDouble(3, quadra.getPrecoPorHora());
             statement.setBoolean(4, quadra.isDisponivel());
-            statement.setString(5, quadra.getDono().getId());
+
             statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -44,17 +44,6 @@ public class QuadraEsportivaDAO {
             statement.setString(1, nome);
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                Locador dono = new Locador(resultSet.getString("dono")); // Presume que Locador tem um construtor que aceita o nome.
-                quadra = new QuadraEsportiva(
-                        resultSet.getString("nome"),
-                        resultSet.getString("tipo"),
-                        resultSet.getDouble("preco_por_hora"),
-                        dono
-                );
-                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
-            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,18 +58,6 @@ public class QuadraEsportivaDAO {
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                Locador dono = new Locador(resultSet.getString("dono")); // Presume que Locador tem um construtor que aceita o nome.
-                QuadraEsportiva quadra = new QuadraEsportiva(
-                        resultSet.getString("nome"),
-                        resultSet.getString("tipo"),
-                        resultSet.getDouble("preco_por_hora"),
-                        dono
-                );
-                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
-                quadras.add(quadra);
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,7 +75,6 @@ public class QuadraEsportivaDAO {
             statement.setString(1, quadra.getTipo());
             statement.setDouble(2, quadra.getPrecoPorHora());
             statement.setBoolean(3, quadra.isDisponivel());
-            statement.setString(4, quadra.getDono().getNome());
             statement.setString(5, quadra.getNome());
             statement.executeUpdate();
 

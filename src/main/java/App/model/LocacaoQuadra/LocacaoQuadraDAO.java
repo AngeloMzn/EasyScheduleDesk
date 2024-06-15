@@ -51,15 +51,6 @@ public class LocacaoQuadraDAO {
             if (resultSet.next()) {
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
-
-                Locatario locatario = new Locatario(resultSet.getString("locatario_nome")); // Presume que Locatario tem um construtor que aceita o nome.
-
-                locacao = new LocacaoQuadra(
-                        quadra,
-                        locatario,
-                        resultSet.getObject("data_hora_inicio", LocalDateTime.class),
-                        resultSet.getObject("data_hora_fim", LocalDateTime.class)
-                );
             }
 
         } catch (SQLException e) {
@@ -81,15 +72,6 @@ public class LocacaoQuadraDAO {
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
 
-                Locatario locatario = new Locatario(resultSet.getString("locatario_nome")); // Presume que Locatario tem um construtor que aceita o nome.
-
-                LocacaoQuadra locacao = new LocacaoQuadra(
-                        quadra,
-                        locatario,
-                        resultSet.getObject("data_hora_inicio", LocalDateTime.class),
-                        resultSet.getObject("data_hora_fim", LocalDateTime.class)
-                );
-                locacoes.add(locacao);
             }
 
         } catch (SQLException e) {

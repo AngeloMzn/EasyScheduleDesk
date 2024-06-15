@@ -10,7 +10,7 @@ module com.example.easyschedule {
 
     opens App to javafx.fxml;
     exports App;
-    opens App.model to javafx.fxml;
-    exports App.model.QuadraEsportiva;
-    opens App.model.QuadraEsportiva to javafx.fxml;
+
+    opens App.controller to javafx.fxml;
+    exports App.controller;
 }

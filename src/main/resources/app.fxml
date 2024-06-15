@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AppController">
+  <children>
+    <Label fx:id="app_tittle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefHeight="58.0" prefWidth="600.0" text="Bem-Vindo ao EasySchedule" textAlignment="CENTER">
+      <font>
+        <Font name="Arial Bold" size="28.0" />
+      </font>
+    </Label>
+    <VBox alignment="CENTER" layoutY="74.0" prefHeight="252.0" prefWidth="600.0">
+      <children>
+        <Button fx:id="btn_goto_login" mnemonicParsing="false" prefHeight="33.0" prefWidth="108.0" text="login">
+          <VBox.margin>
+            <Insets bottom="10.0" />
+          </VBox.margin>
+        </Button>
+        <Button fx:id="btn_goto_register" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="33.0" prefWidth="108.0" text="registar" />
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
