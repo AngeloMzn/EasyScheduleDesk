@@ -9,4 +9,8 @@ module com.example.easyschedule {
 
     opens com.example.easyschedule to javafx.fxml;
     exports com.example.easyschedule;
+    exports com.example.easyschedule.model;
+    opens com.example.easyschedule.model to javafx.fxml;
+    exports com.example.easyschedule.model.QuadraEsportiva;
+    opens com.example.easyschedule.model.QuadraEsportiva to javafx.fxml;
 }
