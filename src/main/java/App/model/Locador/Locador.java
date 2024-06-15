@@ -1,17 +1,19 @@
-package com.example.easyschedule.model.Locatario;
+package App.model.Locador;
 
-public class Locatario {
+public class Locador {
     int id;
     String nome;
-    String CPF;
+    String CNPJ;
     String email;
     String password;
+    double nQuadra;
 
-    public Locatario(String nome, String CPF, String email, String password) {
+    public Locador(String nome, String CNPJ, String email, String password, double nQuadra) {
         this.nome = nome;
-        this.CPF = CPF;
+        this.CNPJ = CNPJ;
         this.email = email;
         this.password = password;
+        this.nQuadra = nQuadra;
     }
 
     public int getId() {
@@ -30,12 +32,12 @@ public class Locatario {
         this.nome = nome;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCNPJ() {
+        return CNPJ;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public void setCNPJ(String cNPJ) {
+        this.CNPJ = cNPJ;
     }
 
     public String getEmail() {
@@ -46,7 +48,6 @@ public class Locatario {
         this.email = email;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -55,5 +56,17 @@ public class Locatario {
         this.password = password;
     }
 
+    public double getnQuadra() {
+        return nQuadra;
+    }
+
+    public void setnQuadra(double nQuadra) {
+        this.nQuadra = nQuadra;
+    }
+
+    @Override
+    public String toString() {
+        return id +": " + nome + ", CNPJ: " + CNPJ + ", email=" + email;
+    }
 
 }

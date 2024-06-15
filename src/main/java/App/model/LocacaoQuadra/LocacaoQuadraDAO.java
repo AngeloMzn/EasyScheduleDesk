@@ -3,7 +3,7 @@ package App.model.LocacaoQuadra;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 import App.model.QuadraEsportiva.QuadraEsportivaDAO;
 import Core.Config.DatabaseConfig;
-import com.example.easyschedule.model.Locatario.Locatario;
+import App.model.Locatario.Locatario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

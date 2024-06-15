@@ -1,5 +1,7 @@
 package App.model.QuadraEsportiva;
 
+import App.model.Locador.Locador;
+
 public class QuadraEsportiva {
 
     String nome;
