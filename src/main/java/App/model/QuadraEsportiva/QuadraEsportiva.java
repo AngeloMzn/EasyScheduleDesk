@@ -1,4 +1,4 @@
-package com.example.easyschedule.model.QuadraEsportiva;
+package App.model.QuadraEsportiva;
 
 public class QuadraEsportiva {
 

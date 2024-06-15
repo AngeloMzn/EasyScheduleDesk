@@ -1,4 +1,4 @@
-package com.example.easyschedule;
+package App;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

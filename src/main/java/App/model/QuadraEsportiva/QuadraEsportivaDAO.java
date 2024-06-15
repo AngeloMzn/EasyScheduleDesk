@@ -1,4 +1,6 @@
-package com.example.easyschedule.model.QuadraEsportiva;
+package App.model.QuadraEsportiva;
+
+import Core.Config.DatabaseConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +12,7 @@ import java.util.List;
 public class QuadraEsportivaDAO {
     private DatabaseConfig databaseConfig;
 
-    public QuadraEsportivaDao() {
+    public QuadraEsportivaDAO() {
         databaseConfig = new DatabaseConfig();
     }
 
@@ -24,7 +26,7 @@ public class QuadraEsportivaDAO {
             statement.setString(2, quadra.getTipo());
             statement.setDouble(3, quadra.getPrecoPorHora());
             statement.setBoolean(4, quadra.isDisponivel());
-            statement.setString(5, quadra.getDono().getNome());
+            statement.setString(5, quadra.getDono().getId());
             statement.executeUpdate();
 
         } catch (SQLException e) {

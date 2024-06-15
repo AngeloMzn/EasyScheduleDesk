@@ -6,11 +6,11 @@ module com.example.easyschedule {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
+    requires java.sql;
 
-    opens com.example.easyschedule to javafx.fxml;
-    exports com.example.easyschedule;
-    exports com.example.easyschedule.model;
-    opens com.example.easyschedule.model to javafx.fxml;
-    exports com.example.easyschedule.model.QuadraEsportiva;
-    opens com.example.easyschedule.model.QuadraEsportiva to javafx.fxml;
+    opens App to javafx.fxml;
+    exports App;
+    opens App.model to javafx.fxml;
+    exports App.model.QuadraEsportiva;
+    opens App.model.QuadraEsportiva to javafx.fxml;
 }

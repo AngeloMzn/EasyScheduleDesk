@@ -1,4 +1,9 @@
-package com.example.easyschedule.model.LocacaoQuadra;
+package App.model.LocacaoQuadra;
+
+import App.model.QuadraEsportiva.QuadraEsportiva;
+import App.model.QuadraEsportiva.QuadraEsportivaDAO;
+import Core.Config.DatabaseConfig;
+import com.example.easyschedule.model.Locatario.Locatario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +16,7 @@ import java.util.List;
 public class LocacaoQuadraDAO {
     private DatabaseConfig databaseConfig;
 
-    public LocacaoQuadraDao() {
+    public LocacaoQuadraDAO() {
         databaseConfig = new DatabaseConfig();
     }
 
@@ -44,7 +49,7 @@ public class LocacaoQuadraDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                QuadraEsportivaDao quadraDao = new QuadraEsportivaDao();
+                QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
 
                 Locatario locatario = new Locatario(resultSet.getString("locatario_nome")); // Presume que Locatario tem um construtor que aceita o nome.
@@ -73,7 +78,7 @@ public class LocacaoQuadraDAO {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                QuadraEsportivaDao quadraDao = new QuadraEsportivaDao();
+                QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
 
                 Locatario locatario = new Locatario(resultSet.getString("locatario_nome")); // Presume que Locatario tem um construtor que aceita o nome.
