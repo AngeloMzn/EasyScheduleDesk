@@ -3,6 +3,7 @@ package App.model.Locatario;
 import App.model.Usuario.Usuario;
 
 public class Locatario extends Usuario {
+    int id;
     String CPF;
 
     public Locatario(String nome, String email, String password, String tipoUsuario, String CPF) {
@@ -10,7 +11,14 @@ public class Locatario extends Usuario {
         this.CPF = CPF;
     }
 
-
+    @Override
+    public int getId() {
+        return id;
+    }
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getCPF() {
         return CPF;
     }

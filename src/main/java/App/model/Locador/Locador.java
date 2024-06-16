@@ -2,6 +2,8 @@ package App.model.Locador;
 
 import App.model.Usuario.Usuario;
 public class Locador extends Usuario {
+
+    int id;
     private String CNPJ;
     private int nQuadras;
 
@@ -11,6 +13,14 @@ public class Locador extends Usuario {
         this.nQuadras = 0;
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getCNPJ() {
         return CNPJ;
     }
