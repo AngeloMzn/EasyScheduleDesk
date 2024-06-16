@@ -32,10 +32,10 @@ public class CadastrarQuadraController {
     private TextField input_nome_quadra;
 
     @FXML
-    private PasswordField input_preco_quadra;
+    private TextField preco_input;
 
     @FXML
-    private PasswordField input_tipo_quadra;
+    private TextField tipo_input;
 
     @FXML
     private Label login_tittle;
@@ -73,8 +73,8 @@ public class CadastrarQuadraController {
     @FXML
     void salvarQuadra(ActionEvent event) {
         String nomeQuadra = input_nome_quadra.getText();
-        String precoQuadra = input_preco_quadra.getText();
-        String tipoQuadra = input_tipo_quadra.getText();
+        String precoQuadra = preco_input.getText();
+        String tipoQuadra = tipo_input.getText();
         String disponivel = choice_box_disponivel.getValue();
 
         String nomeLocadorSelecionado = combo_dono_quadra.getValue();
