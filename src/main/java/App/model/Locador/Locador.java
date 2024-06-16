@@ -1,35 +1,14 @@
 package App.model.Locador;
 
-public class Locador {
-    int id;
-    String nome;
-    String CNPJ;
-    String email;
-    String password;
-    double nQuadra;
+import App.model.Usuario.Usuario;
+public class Locador extends Usuario {
+    private String CNPJ;
+    private int nQuadras;
 
-    public Locador(String nome, String CNPJ, String email, String password, double nQuadra) {
-        this.nome = nome;
+    public Locador(int id, String nome, String email, String password, String tipoUsuario, String CNPJ, int nQuadras) {
+        super(id, nome, email, password, tipoUsuario);
         this.CNPJ = CNPJ;
-        this.email = email;
-        this.password = password;
-        this.nQuadra = nQuadra;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.nQuadras = nQuadras;
     }
 
     public String getCNPJ() {
@@ -40,33 +19,17 @@ public class Locador {
         this.CNPJ = cNPJ;
     }
 
-    public String getEmail() {
-        return email;
+    public int getnQuadras() {
+        return nQuadras;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public double getnQuadra() {
-        return nQuadra;
-    }
-
-    public void setnQuadra(double nQuadra) {
-        this.nQuadra = nQuadra;
+    public void setnQuadras(int nQuadras) {
+        this.nQuadras = nQuadras;
     }
 
     @Override
     public String toString() {
-        return id +": " + nome + ", CNPJ: " + CNPJ + ", email=" + email;
+        return "Nome: " + getNome() + ", CNPJ: " + CNPJ;
     }
 
 }

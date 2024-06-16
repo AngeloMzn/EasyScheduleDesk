@@ -1,5 +1,7 @@
 package App.model.QuadraEsportiva;
 
+import App.model.Locador.Locador;
+import App.model.Locador.LocadorDAO;
 import Core.Config.DatabaseConfig;
 
 import java.sql.Connection;
@@ -16,8 +18,8 @@ public class QuadraEsportivaDAO {
         databaseConfig = new DatabaseConfig();
     }
 
-    public void adicionarQuadra(QuadraEsportiva quadra) {
-        String sql = "INSERT INTO quadras_esportivas (nome, tipo, preco_por_hora, disponivel, dono) VALUES (?, ?, ?, ?, ?)";
+    public String adicionarQuadra(QuadraEsportiva quadra) {
+        String sql = "INSERT INTO quadras_esportivas (nome, tipo, preco_por_hora, disponivel, id_dono) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -26,23 +28,40 @@ public class QuadraEsportivaDAO {
             statement.setString(2, quadra.getTipo());
             statement.setDouble(3, quadra.getPrecoPorHora());
             statement.setBoolean(4, quadra.isDisponivel());
+            statement.setInt(5, quadra.getDono().getId());
 
             statement.executeUpdate();
-
+            return "Quadra salva com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao salvar Quadra: " + e.getMessage();
         }
     }
 
-    public QuadraEsportiva buscarQuadraPorNome(String nome) {
-        String sql = "SELECT * FROM quadras_esportivas WHERE nome = ?";
+    public QuadraEsportiva buscarQuadraPorId(int id) {
+        String sql = "SELECT * FROM quadras_esportivas WHERE id = ?";
         QuadraEsportiva quadra = null;
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, nome);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                LocadorDAO locadorDAO = new LocadorDAO();
+                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_dono"));
+                quadra = new QuadraEsportiva(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("tipo"),
+                        resultSet.getDouble("preco_por_hora"),
+                        dono,
+                        resultSet.getBoolean("disponivel")
+                );
+                quadra.setId(resultSet.getInt("id"));
+                int idDono = resultSet.getInt("id_dono");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,6 +78,24 @@ public class QuadraEsportivaDAO {
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
 
+            while (resultSet.next()) {
+                LocadorDAO locadorDAO = new LocadorDAO();
+                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_dono"));
+                QuadraEsportiva quadra = new QuadraEsportiva(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("tipo"),
+                        resultSet.getDouble("preco_por_hora"),
+                        dono,
+                        resultSet.getBoolean("disponivel")
+                );
+                quadra.setId(resultSet.getInt("id"));
+                int idDono = resultSet.getInt("id_dono");
+                // Recuperar o dono da quadra usando um DAO ou diretamente dependendo da implementação
+
+                quadras.add(quadra);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,8 +103,8 @@ public class QuadraEsportivaDAO {
         return quadras;
     }
 
-    public void atualizarQuadra(QuadraEsportiva quadra) {
-        String sql = "UPDATE quadras_esportivas SET tipo = ?, preco_por_hora = ?, disponivel = ?, dono = ? WHERE nome = ?";
+    public String atualizarQuadra(QuadraEsportiva quadra) {
+        String sql = "UPDATE quadras_esportivas SET tipo = ?, preco_por_hora = ?, disponivel = ?, id_dono = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -75,25 +112,28 @@ public class QuadraEsportivaDAO {
             statement.setString(1, quadra.getTipo());
             statement.setDouble(2, quadra.getPrecoPorHora());
             statement.setBoolean(3, quadra.isDisponivel());
-            statement.setString(5, quadra.getNome());
+            statement.setInt(4, quadra.getDono().getId());
+            statement.setInt(5, quadra.getId());
             statement.executeUpdate();
-
+            return "Quadra atualizada com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao atualizar Quadra: " + e.getMessage();
         }
     }
 
-    public void deletarQuadra(String nome) {
-        String sql = "DELETE FROM quadras_esportivas WHERE nome = ?";
+    public String deletarQuadra(int id) {
+        String sql = "DELETE FROM quadras_esportivas WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, nome);
+            statement.setInt(1, id);
             statement.executeUpdate();
-
+            return "Quadra deletada com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao deletar Quadra: " + e.getMessage();
         }
     }
 }

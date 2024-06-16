@@ -1,7 +1,9 @@
 package App.model.LocacaoQuadra;
 
+import App.model.Locatario.LocatarioDAO;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 import App.model.QuadraEsportiva.QuadraEsportivaDAO;
+import App.model.Usuario.Usuario;
 import Core.Config.DatabaseConfig;
 import App.model.Locatario.Locatario;
 
@@ -20,37 +22,48 @@ public class LocacaoQuadraDAO {
         databaseConfig = new DatabaseConfig();
     }
 
-    public void adicionarLocacao(LocacaoQuadra locacao) {
-        String sql = "INSERT INTO locacoes_quadra (quadra_nome, locatario_nome, data_hora_inicio, data_hora_fim) VALUES (?, ?, ?, ?)";
+    public String adicionarLocacao(LocacaoQuadra locacao) {
+        String sql = "INSERT INTO LocacaoQuadra (id_QuadraEsportiva, id_Locatario, dataHorarioInicio, dataHorarioFim) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, locacao.getQuadra().getNome());
-            statement.setString(2, locacao.getLocatario().getNome());
+            statement.setInt(1, locacao.getQuadra().getId());
+            statement.setInt(2, locacao.getLocatario().getId());
             statement.setObject(3, locacao.getDataHoraInicio());
             statement.setObject(4, locacao.getDataHoraFim());
             statement.executeUpdate();
-
+            return "Locação salva com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao salvar locação: " + e.getMessage();
         }
     }
 
-    public LocacaoQuadra buscarLocacaoPorQuadraENome(String quadraNome, String locatarioNome) {
-        String sql = "SELECT * FROM locacoes_quadra WHERE quadra_nome = ? AND locatario_nome = ?";
+    public LocacaoQuadra buscarLocacaoPorId(int id) {
+        String sql = "SELECT * FROM LocacaoQuadra WHERE id = ?";
         LocacaoQuadra locacao = null;
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, quadraNome);
-            statement.setString(2, locatarioNome);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
-                QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
+                QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
+
+                LocatarioDAO locatarioDAO = new LocatarioDAO();
+                Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
+
+                locacao = new LocacaoQuadra(
+                        resultSet.getInt("id"),
+                        quadra,
+                        locatario,
+                        resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
+                        resultSet.getObject("dataHorarioFim", LocalDateTime.class)
+                );
             }
 
         } catch (SQLException e) {
@@ -61,7 +74,7 @@ public class LocacaoQuadraDAO {
     }
 
     public List<LocacaoQuadra> listarTodasAsLocacoes() {
-        String sql = "SELECT * FROM locacoes_quadra";
+        String sql = "SELECT * FROM LocacaoQuadra";
         List<LocacaoQuadra> locacoes = new ArrayList<>();
 
         try (Connection connection = databaseConfig.getConnection();
@@ -70,8 +83,20 @@ public class LocacaoQuadraDAO {
 
             while (resultSet.next()) {
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
-                QuadraEsportiva quadra = quadraDao.buscarQuadraPorNome(resultSet.getString("quadra_nome"));
+                QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
 
+                LocatarioDAO locatarioDAO = new LocatarioDAO();
+                Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
+
+                LocacaoQuadra locacao = new LocacaoQuadra(
+                        resultSet.getInt("id"),
+                        quadra,
+                        locatario,
+                        resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
+                        resultSet.getObject("dataHorarioFim", LocalDateTime.class)
+                );
+
+                locacoes.add(locacao);
             }
 
         } catch (SQLException e) {
@@ -81,35 +106,37 @@ public class LocacaoQuadraDAO {
         return locacoes;
     }
 
-    public void atualizarLocacao(LocacaoQuadra locacao) {
-        String sql = "UPDATE locacoes_quadra SET data_hora_inicio = ?, data_hora_fim = ? WHERE quadra_nome = ? AND locatario_nome = ?";
+    public String atualizarLocacao(LocacaoQuadra locacao) {
+        String sql = "UPDATE LocacaoQuadra SET id_QuadraEsportiva = ?, id_Locatario = ?, dataHorarioInicio = ?, dataHorarioFim = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setObject(1, locacao.getDataHoraInicio());
-            statement.setObject(2, locacao.getDataHoraFim());
-            statement.setString(3, locacao.getQuadra().getNome());
-            statement.setString(4, locacao.getLocatario().getNome());
+            statement.setInt(1, locacao.getQuadra().getId());
+            statement.setInt(2, locacao.getLocatario().getId());
+            statement.setObject(3, locacao.getDataHoraInicio());
+            statement.setObject(4, locacao.getDataHoraFim());
+            statement.setInt(5, locacao.getId());
             statement.executeUpdate();
-
+            return "Locação atualizada com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao atualizar locação: " + e.getMessage();
         }
     }
 
-    public void deletarLocacao(String quadraNome, String locatarioNome) {
-        String sql = "DELETE FROM locacoes_quadra WHERE quadra_nome = ? AND locatario_nome = ?";
+    public String deletarLocacao(int id) {
+        String sql = "DELETE FROM LocacaoQuadra WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, quadraNome);
-            statement.setString(2, locatarioNome);
+            statement.setInt(1, id);
             statement.executeUpdate();
-
+            return "Locação deletada com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Erro ao deletar locação: " + e.getMessage();
         }
     }
 }

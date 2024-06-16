@@ -7,15 +7,16 @@ import App.model.QuadraEsportiva.QuadraEsportiva;
 import java.time.LocalDateTime;
 
 public class LocacaoQuadra {
+    int id;
     QuadraEsportiva quadra;
     Locatario locatario;
     LocalDateTime dataHoraInicio;
     LocalDateTime dataHoraFim;
-    public LocacaoQuadra(QuadraEsportiva quadra, Locatario locatario, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
+    public LocacaoQuadra(int id, QuadraEsportiva quadra, Locatario locatario, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
         if (!quadra.isDisponivel()) {
             throw new IllegalArgumentException("A quadra não está disponível para locação.");
         }
-
+        this.id = id;
         this.quadra = quadra;
         this.locatario = locatario;
         this.dataHoraInicio = dataHoraInicio;
@@ -23,6 +24,13 @@ public class LocacaoQuadra {
         this.quadra.setDisponivel(false);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public QuadraEsportiva getQuadra() {
         return quadra;

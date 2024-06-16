@@ -4,19 +4,27 @@ import App.model.Locador.Locador;
 
 public class QuadraEsportiva {
 
+    int id;
     String nome;
     String tipo;
     Double precoPorHora;
     Locador dono;
     boolean disponivel;
-    public QuadraEsportiva(String nome, String tipo, double precoPorHora, Locador dono) {
+    public QuadraEsportiva(int id, String nome, String tipo, double precoPorHora, Locador dono, boolean disponivel) {
+        this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.precoPorHora = precoPorHora;
-        this.disponivel = true;
         this.dono = dono;
+        this.disponivel = true;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getNome() {
         return nome;
     }
@@ -41,6 +49,12 @@ public class QuadraEsportiva {
         this.precoPorHora = precoPorHora;
     }
 
+    public Locador getDono() {
+        return dono;
+    }
+    public void setDono(Locador dono) {
+        this.dono = dono;
+    }
     public boolean isDisponivel() {
         return disponivel;
     }
