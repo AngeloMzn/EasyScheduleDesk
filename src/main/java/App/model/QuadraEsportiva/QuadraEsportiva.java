@@ -10,7 +10,7 @@ public class QuadraEsportiva {
     Double precoPorHora;
     Locador dono;
     boolean disponivel;
-    public QuadraEsportiva(int id, String nome, String tipo, double precoPorHora, Locador dono, boolean disponivel) {
+    public QuadraEsportiva(int id, String nome, String tipo, double precoPorHora, Locador dono) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;

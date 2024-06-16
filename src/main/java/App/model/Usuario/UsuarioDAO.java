@@ -5,10 +5,7 @@ import App.model.Locatario.LocatarioDAO;
 import Core.Config.DatabaseConfig;
 import App.model.Usuario.Usuario;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +16,33 @@ public class UsuarioDAO {
         databaseConfig = new DatabaseConfig();
     }
 
-    public String adicionarUsuario(Usuario usuario) {
+    public int adicionarUsuario(Usuario usuario) {
         String sql = "INSERT INTO Usuario (nome, email, password, tipoUsuario) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, usuario.getNome());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getPassword());
             statement.setString(4, usuario.getTipoUsuario());
-            statement.executeUpdate();
-            return "Usuário salvo com sucesso!";
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Falha ao inserir usuário, nenhuma linha afetada.");
+            }
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1); // Retorna o ID gerado
+            } else {
+                throw new SQLException("Falha ao obter o ID gerado do usuário.");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro ao salvar usuário: " + e.getMessage();
+            return -1; // Ou outro tratamento de erro adequado
         }
     }
 

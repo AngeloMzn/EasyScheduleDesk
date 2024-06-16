@@ -1,5 +1,6 @@
 package App.model.Locador;
 
+import App.model.Usuario.UsuarioDAO;
 import Core.Config.DatabaseConfig;
 
 import java.sql.*;
@@ -14,12 +15,20 @@ public class LocadorDAO {
     }
 
     public String addLocador(Locador locador) {
-        String sql = "INSERT INTO locadores (idUsuario, CNPJ, nQuadras) VALUES (?, ?, ?)";
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        int usuarioId = usuarioDAO.adicionarUsuario(locador);
+
+        if (usuarioId == -1) {
+            return "Erro ao adicionar usuário. Locador não adicionado.";
+        }
+
+        // Agora adiciona o locador usando o ID do usuário
+        String sql = "INSERT INTO Locador (idUsuario, CNPJ, nQuadras) VALUES (?, ?, ?)";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, locador.getId());
+            pstmt.setInt(1, usuarioId); // ID do usuário inserido
             pstmt.setString(2, locador.getCNPJ());
             pstmt.setInt(3, locador.getnQuadras());
 
@@ -53,9 +62,9 @@ public class LocadorDAO {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tipoUsuario"),
-                        rs.getString("CNPJ"),
-                        rs.getInt("nQuadras")
+                        rs.getString("CNPJ")
                 );
+                locador.setnQuadras(rs.getInt("nQuadras"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,9 +88,9 @@ public class LocadorDAO {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tipoUsuario"),
-                        rs.getString("CNPJ"),
-                        rs.getInt("nQuadras")
+                        rs.getString("CNPJ")
                 );
+                locador.setnQuadras(rs.getInt("nQuadras"));
                 locadores.add(locador);
             }
         } catch (SQLException e) {

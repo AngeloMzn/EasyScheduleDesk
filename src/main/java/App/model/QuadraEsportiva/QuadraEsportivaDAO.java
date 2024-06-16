@@ -56,9 +56,9 @@ public class QuadraEsportivaDAO {
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
                         resultSet.getDouble("preco_por_hora"),
-                        dono,
-                        resultSet.getBoolean("disponivel")
+                        dono
                 );
+                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
                 quadra.setId(resultSet.getInt("id"));
                 int idDono = resultSet.getInt("id_dono");
             }
@@ -86,12 +86,11 @@ public class QuadraEsportivaDAO {
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
                         resultSet.getDouble("preco_por_hora"),
-                        dono,
-                        resultSet.getBoolean("disponivel")
+                        dono
                 );
+                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
                 quadra.setId(resultSet.getInt("id"));
                 int idDono = resultSet.getInt("id_dono");
-                // Recuperar o dono da quadra usando um DAO ou diretamente dependendo da implementação
 
                 quadras.add(quadra);
             }

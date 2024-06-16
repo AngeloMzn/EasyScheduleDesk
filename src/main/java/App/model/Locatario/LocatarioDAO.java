@@ -1,5 +1,6 @@
 package App.model.Locatario;
 
+import App.model.Usuario.UsuarioDAO;
 import Core.Config.DatabaseConfig;
 
 import java.sql.*;
@@ -14,12 +15,20 @@ public class LocatarioDAO {
     }
 
     public String addLocatario(Locatario locatario) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        int usuarioId = usuarioDAO.adicionarUsuario(locatario);
+
+        if (usuarioId == -1) {
+            return "Erro ao adicionar usuário. Locatário não adicionado.";
+        }
+
+        // Agora adiciona o locatário usando o ID do usuário
         String sql = "INSERT INTO Locatario (idUsuario, CPF) VALUES (?, ?)";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, locatario.getId());
+            pstmt.setInt(1, usuarioId); // ID do usuário inserido
             pstmt.setString(2, locatario.getCPF());
 
             pstmt.executeUpdate();
@@ -28,10 +37,10 @@ public class LocatarioDAO {
             if (generatedKeys.next()) {
                 locatario.setId(generatedKeys.getInt(1));
             }
-            return "Locatario salvo com sucesso!";
+            return "Locatário salvo com sucesso!";
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro ao salvar Locatario: " + e.getMessage();
+            return "Erro ao salvar Locatário: " + e.getMessage();
         }
     }
 
@@ -73,14 +82,14 @@ public class LocatarioDAO {
 
             while (rs.next()) {
                 Locatario locatario = new Locatario(
-                        rs.getInt("idUsuario"),
+                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("tipoUsuario"),
                         rs.getString("CPF")
                 );
-                locatario.setId(rs.getInt("id"));
+                //locatario.setId(rs.getInt("id"));
                 locatarios.add(locatario);
             }
         } catch (SQLException e) {

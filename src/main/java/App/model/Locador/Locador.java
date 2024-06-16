@@ -5,10 +5,10 @@ public class Locador extends Usuario {
     private String CNPJ;
     private int nQuadras;
 
-    public Locador(int id, String nome, String email, String password, String tipoUsuario, String CNPJ, int nQuadras) {
+    public Locador(int id, String nome, String email, String password, String tipoUsuario, String CNPJ) {
         super(id, nome, email, password, tipoUsuario);
         this.CNPJ = CNPJ;
-        this.nQuadras = nQuadras;
+        this.nQuadras = 0;
     }
 
     public String getCNPJ() {

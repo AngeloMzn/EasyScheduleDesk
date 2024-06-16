@@ -1,5 +1,5 @@
 package App.model.Usuario;
-
+/*
 import App.model.Locatario.Locatario;
 
 import java.util.List;
@@ -45,3 +45,4 @@ public class UsuarioRepository {
         }
     }
 }
+*/
