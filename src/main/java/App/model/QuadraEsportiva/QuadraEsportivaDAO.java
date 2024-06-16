@@ -55,6 +55,7 @@ public class QuadraEsportivaDAO {
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
                         resultSet.getDouble("precoPorHora"),
+                        resultSet.getBoolean("disponivel"),
                         dono
                 );
                 quadra.setDisponivel(resultSet.getBoolean("disponivel"));
@@ -102,7 +103,7 @@ public class QuadraEsportivaDAO {
                 double precoPorHora = resultSet.getDouble("precoporHora");
                 boolean disponivel = resultSet.getBoolean("disponivel");
 
-                QuadraEsportiva quadra = new QuadraEsportiva(quadraNome, tipo, precoPorHora, locador);
+                QuadraEsportiva quadra = new QuadraEsportiva(quadraNome, tipo, precoPorHora, disponivel, locador);
                 quadra.setId(quadraId);
                 quadra.setDisponivel(disponivel);
 

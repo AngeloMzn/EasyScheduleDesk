@@ -10,12 +10,12 @@ public class QuadraEsportiva {
     Double precoPorHora;
     Locador dono;
     boolean disponivel;
-    public QuadraEsportiva(String nome, String tipo, double precoPorHora, Locador dono) {
+    public QuadraEsportiva(String nome, String tipo, double precoPorHora, boolean disponivel, Locador dono) {
         this.nome = nome;
         this.tipo = tipo;
         this.precoPorHora = precoPorHora;
-        this.dono = dono;
         this.disponivel = true;
+        this.dono = dono;
     }
 
     public int getId() {
