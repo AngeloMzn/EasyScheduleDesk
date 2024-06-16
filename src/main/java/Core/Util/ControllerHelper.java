@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ControllerHelper {
 
@@ -34,5 +35,17 @@ public class ControllerHelper {
             System.out.println("Erro inesperado ao carregar a cena.");
             e.printStackTrace();
         }
+    }
+
+    public  boolean isNull(List<?> lista) {
+        if (lista == null || lista.isEmpty()) {
+            return true;
+        }
+        for (Object elemento : lista) {
+            if (elemento == null) {
+                return true;
+            }
+        }
+        return false;
     }
 }

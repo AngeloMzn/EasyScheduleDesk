@@ -5,8 +5,8 @@ import App.model.Usuario.Usuario;
 public class Locatario extends Usuario {
     String CPF;
 
-    public Locatario(int id, String nome, String email, String password, String tipoUsuario, String CPF) {
-        super(id, nome, email, password, tipoUsuario);
+    public Locatario(String nome, String email, String password, String tipoUsuario, String CPF) {
+        super(nome, email, password, tipoUsuario);
         this.CPF = CPF;
     }
 

@@ -7,14 +7,6 @@ public abstract class Usuario {
     protected String password;
     protected String tipoUsuario;
 
-    public Usuario(int id, String nome, String email, String password, String tipoUsuario){
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.password = password;
-        this.tipoUsuario = tipoUsuario;
-    }
-
     public Usuario(String nome, String email, String password, String tipoUsuario){
         this.nome = nome;
         this.email = email;

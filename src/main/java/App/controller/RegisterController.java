@@ -1,5 +1,9 @@
 package App.controller;
 
+import App.model.Locador.Locador;
+import App.model.Locador.LocadorRepository;
+import App.model.Locatario.Locatario;
+import App.model.Locatario.LocatarioRepository;
 import Core.Util.ControllerHelper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,9 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class RegisterController {
 
     ControllerHelper helper = new ControllerHelper();
+
 
     @FXML
     private Label app_tittle;
@@ -70,6 +77,17 @@ public class RegisterController {
         String senha = input_senha.getText();
         String tipoUsuario = choice_tipoUsuario.getValue();
         String cpfCnpj = input_cpf_cnpj.getText();
+        if (nome == null || email == null || senha == null || tipoUsuario == null || cpfCnpj == null) {
+            System.out.println("Todos os campos aqui são obrigatórios...");
+        } else if(tipoUsuario == "locador") {
+            Locador locador = new Locador(nome, email, senha, tipoUsuario, cpfCnpj);
+            LocadorRepository repository = new LocadorRepository();
+            repository.addLocador(locador);
+        }else if(tipoUsuario == "locatário"){
+            Locatario locatario = new Locatario(nome, email, senha, tipoUsuario, cpfCnpj);
+            LocatarioRepository repository = new LocatarioRepository();
+            repository.addLocatario(locatario);
+        }
 
         // Adicione a lógica para processar os dados do registro aqui
         System.out.println("Registrando usuário: " + nome + ", " + email + ", " + senha + ", " + tipoUsuario + ", " + cpfCnpj);
