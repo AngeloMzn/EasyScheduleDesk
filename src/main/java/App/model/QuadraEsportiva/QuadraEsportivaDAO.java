@@ -39,7 +39,13 @@ public class QuadraEsportivaDAO {
     }
 
     public QuadraEsportiva buscarQuadraPorId(int id) {
-        String sql = "SELECT * FROM quadraesportiva WHERE id = ?";
+        String sql = "SELECT q.id AS quadraId, q.nome AS quadraNome, q.tipo, q.precoporHora, q.disponivel, " +
+                "l.id AS locadorId, l.CNPJ, l.nQuadras, " +
+                "u.id AS usuarioId, u.nome AS usuarioNome, u.email, u.password, u.tipoUsuario " +
+                "FROM quadraesportiva q " +
+                "JOIN locador l ON q.id_Locador = l.id " +
+                "JOIN usuario u ON l.id_Usuario = u.id " +
+                "WHERE q.id = ?";
         QuadraEsportiva quadra = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -49,18 +55,29 @@ public class QuadraEsportivaDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                LocadorDAO locadorDAO = new LocadorDAO();
-                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_locador"));
+                int locadorId = resultSet.getInt("locadorId");
+                String cnpj = resultSet.getString("CNPJ");
+                int nQuadras = resultSet.getInt("nQuadras");
+                int usuarioId = resultSet.getInt("usuarioId");
+                String usuarioNome = resultSet.getString("usuarioNome");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String tipoUsuario = resultSet.getString("tipoUsuario");
+
+                Locador locador = new Locador(usuarioNome, email, password, tipoUsuario, cnpj);
+                locador.setId(locadorId);
+                locador.setnQuadras(nQuadras);
+
                 quadra = new QuadraEsportiva(
-                        resultSet.getString("nome"),
+                        resultSet.getString("quadraNome"),
                         resultSet.getString("tipo"),
                         resultSet.getDouble("precoPorHora"),
                         resultSet.getInt("disponivel"),
-                        dono
+                        locador
                 );
-                quadra.setDisponivel(resultSet.getInt("disponivel"));
-                quadra.setId(resultSet.getInt("id"));
-                int idDono = resultSet.getInt("id_Locador");
+                //quadra.setDisponivel(resultSet.getInt("disponivel"));
+                //quadra.setId(resultSet.getInt("id"));
+                //int idDono = resultSet.getInt("id_Locador");
             }
 
         } catch (SQLException e) {
