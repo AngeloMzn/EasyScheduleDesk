@@ -19,7 +19,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String adicionarQuadra(QuadraEsportiva quadra) {
-        String sql = "INSERT INTO quadrasesportiva (nome, tipo, precoPorHora, disponivel, id_Locador) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO quadraesportiva (nome, tipo, precoPorHora, disponivel, id_Locador) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -39,7 +39,7 @@ public class QuadraEsportivaDAO {
     }
 
     public QuadraEsportiva buscarQuadraPorId(int id) {
-        String sql = "SELECT * FROM quadrasesportiva WHERE id = ?";
+        String sql = "SELECT * FROM quadraesportiva WHERE id = ?";
         QuadraEsportiva quadra = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -70,10 +70,10 @@ public class QuadraEsportivaDAO {
     }
 
     public List<QuadraEsportiva> listarTodasAsQuadras() {
-        String sql = "SELECT q.id, q.nome AS quadraNome, q.tipo, q.precoporHora, q.disponivel, " +
+        String sql = "SELECT q.id, q.nome AS quadraNome, q.tipo, q.precoporHora, q.id_Locador, q.disponivel, " +
                 "l.id AS locadorId, l.CNPJ, l.nQuadras, " +
                 "u.id AS usuarioId, u.nome AS usuarioNome, u.email, u.password, u.tipoUsuario " +
-                "FROM quadrasesportiva q " +
+                "FROM quadraesportiva q " +
                 "JOIN locador l ON q.id_Locador = l.id " +
                 "JOIN usuario u ON l.id_Usuario = u.id";
 
@@ -117,7 +117,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String atualizarQuadra(QuadraEsportiva quadra) {
-        String sql = "UPDATE quadrasesportiva SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
+        String sql = "UPDATE quadraesportiva SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -136,7 +136,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String deletarQuadra(int id) {
-        String sql = "DELETE FROM quadrasesportiva WHERE id = ?";
+        String sql = "DELETE FROM quadraesportiva WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
