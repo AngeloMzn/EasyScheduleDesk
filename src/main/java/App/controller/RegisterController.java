@@ -4,6 +4,7 @@ import App.model.Locador.Locador;
 import App.model.Locador.LocadorRepository;
 import App.model.Locatario.Locatario;
 import App.model.Locatario.LocatarioRepository;
+
 import Core.Util.ControllerHelper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -115,5 +116,4 @@ public class RegisterController {
             input_cpf_cnpj.setVisible(false);
         }
     }
-
 }

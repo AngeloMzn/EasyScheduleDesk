@@ -1,4 +1,4 @@
-module com.example.easyschedule {
+module main.java.easyschedule {
     requires javafx.controls;
     requires javafx.fxml;
 

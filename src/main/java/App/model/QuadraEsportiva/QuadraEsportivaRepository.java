@@ -23,13 +23,15 @@ public class QuadraEsportivaRepository {
             System.out.println(response);
         }
     }
-    public void listarTodasAsQuadras(){
+    public List<QuadraEsportiva> listarTodasAsQuadras(){
 
         List<QuadraEsportiva> response = dao.listarTodasAsQuadras();
         if(!response.isEmpty()){
             System.out.println(response);
         }
+        return response;
     }
+
     public void atualizarQuadra(QuadraEsportiva quadra){
 
         String response = dao.adicionarQuadra(quadra);

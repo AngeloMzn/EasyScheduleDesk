@@ -1,5 +1,6 @@
 package App.controller;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,5 +30,6 @@ public class LocatarioController {
 
     @FXML
     private ToggleButton toggle_disponivel;
+
 
 }

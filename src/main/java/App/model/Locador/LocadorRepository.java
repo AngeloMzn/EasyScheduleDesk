@@ -21,12 +21,8 @@ public class LocadorRepository {
             System.out.println(response);
         }
     }
-    public void getAllLocadores(){
-
-        List<Locador> response = dao.getAllLocadores();
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+    public List<Locador> getAllLocadores(){
+        return dao.getAllLocadores();
     }
     public void updateLocador(Locador locador){
 

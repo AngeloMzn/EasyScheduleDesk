@@ -104,8 +104,8 @@ public class LocadorDAO {
 
     public List<Locador> getAllLocadores() {
         String sql = "SELECT l.CNPJ, l.nQuadras, u.nome, u.email, u.password, u.tipoUsuario " +
-                     "FROM locadores l " +
-                     "JOIN usuarios u ON l.id_Usuario = u.id";
+                     "FROM locador l " +
+                     "JOIN usuario u ON l.id_Usuario = u.id";
 
         List<Locador> locadores = new ArrayList<>();
 

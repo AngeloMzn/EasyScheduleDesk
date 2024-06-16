@@ -1,13 +1,19 @@
 package App.controller;
 
+
+import Core.Util.ControllerHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
 public class LocadorController {
+
+    private ControllerHelper helper = new ControllerHelper();
+    private  int userId;
 
     @FXML
     private Button btn_add_quadra;
@@ -38,5 +44,14 @@ public class LocadorController {
 
     @FXML
     private ToggleButton toggle_disponivel;
+
+    @FXML
+    public void novaQuadra(){
+        Stage currentStage = (Stage) btn_add_quadra.getScene().getWindow();
+        helper.loadScene("/cadastrar_quadra.fxml", currentStage);
+    }
+
+
+
 
 }

@@ -51,23 +51,23 @@ public class LoginController {
 
     @FXML
     void logar(ActionEvent event) {
-        String email =  input_email_login.getText();
+        String email = input_email_login.getText();
         String senha = input_senha_login.getText();
         UsuarioRepository repository = new UsuarioRepository();
         Usuario user = repository.buscarUsuarioPorEmail(email);
 
-        if (user != null && senha.equals(user.getPassword())){
+        if (user != null && senha.equals(user.getPassword())) {
             System.out.println("Logado !!");
             Stage currentStage = (Stage) btn_login.getScene().getWindow();
-            if(user.getTipoUsuario().equals("locatário")){
+            if (user.getTipoUsuario().equals("locatário")) {
                 helper.loadScene("/locatario.fxml", currentStage);
-            }else{
+            } else {
                 helper.loadScene("/locador.fxml", currentStage);
             }
-        }else{
-            System.out.println("Credenciais invalidas !");
+        } else {
+            System.out.println("Credenciais inválidas!");
         }
-
     }
+
 
 }
