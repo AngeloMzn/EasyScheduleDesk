@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class LoginController {
+public class LoginController extends Controller{
 
     ControllerHelper helper = new ControllerHelper();
 

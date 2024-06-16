@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class AppController {
+public class AppController extends Controller {
     ControllerHelper helper =  new ControllerHelper();
 
     @FXML

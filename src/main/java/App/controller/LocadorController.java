@@ -18,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
-public class LocadorController {
+public class LocadorController extends Controller{
 
     private ControllerHelper helper = new ControllerHelper();
     private int idQuadraSelecionada;
@@ -28,6 +28,9 @@ public class LocadorController {
 
     @FXML
     private Button btn_delete_quadra;
+
+    @FXML
+    private Button btn_logout;
 
     @FXML
     private Button btn_edit_quadra;
@@ -76,7 +79,6 @@ public class LocadorController {
 
     @FXML
     public void initialize() {
-        // Inicializar as colunas da tabela
         quadra_cell_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nome_cell_id.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tipo_cell_id.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -116,10 +118,15 @@ public class LocadorController {
         int idQuadraSelecionada = quadraSelecionada.getId();
         if (idQuadraSelecionada != 0) {
             Stage currentStage = (Stage) btn_edit_quadra.getScene().getWindow();
-            helper.openEditarQuadra(idQuadraSelecionada, currentStage);
+            helper.loadWithParams(idQuadraSelecionada, currentStage, "/editar_quadra.fxml");
         }
     }
 
+    @FXML
+    public void logout(){
+        Stage currentStage = (Stage) btn_logout.getScene().getWindow();
+        helper.loadScene("/app.fxml", currentStage);
+    }
     @FXML
     public void novaQuadra() {
         Stage currentStage = (Stage) btn_add_quadra.getScene().getWindow();

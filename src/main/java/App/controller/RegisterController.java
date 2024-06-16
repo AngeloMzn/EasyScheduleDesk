@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class RegisterController {
+public class RegisterController extends Controller{
 
     ControllerHelper helper = new ControllerHelper();
 

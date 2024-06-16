@@ -33,12 +33,12 @@
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_delete_quadra" onAction="#deletarQuadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="excluir">
+                  <Button fx:id="btn_delete_quadra" mnemonicParsing="false" onAction="#deletarQuadra" prefHeight="25.0" prefWidth="102.0" text="excluir">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_edit_quadra" onAction="#editarQuadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Editar">
+                  <Button fx:id="btn_edit_quadra" mnemonicParsing="false" onAction="#editarQuadra" prefHeight="25.0" prefWidth="102.0" text="Editar">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
@@ -69,6 +69,15 @@
                      </HBox.margin>
                   </Label>
                   <ToggleButton fx:id="toggle_disponivel" mnemonicParsing="false" text="sim" />
+               </children>
+            </HBox>
+            <HBox prefHeight="60.0" prefWidth="722.0">
+               <children>
+                  <Button fx:id="btn_logout" onAction="#logout" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&lt;&lt; logout">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>

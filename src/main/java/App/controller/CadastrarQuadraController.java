@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CadastrarQuadraController {
+public class CadastrarQuadraController extends Controller {
 
     ControllerHelper helper = new ControllerHelper();
 

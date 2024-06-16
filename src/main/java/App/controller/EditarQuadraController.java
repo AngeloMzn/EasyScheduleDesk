@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EditarQuadraController {
+public class EditarQuadraController extends Controller {
 
     ControllerHelper helper = new ControllerHelper();
     private int idQuadra;
@@ -94,7 +94,7 @@ public class EditarQuadraController {
             combo_dono_quadra.setValue(nomesLocadores.get(0));
         }
     }
-
+    @Override
     public void initData(int idQuadra) {
         this.idQuadra = idQuadra;
         QuadraEsportivaRepository quadraEsportivaRepository = new QuadraEsportivaRepository();
