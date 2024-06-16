@@ -75,6 +75,36 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    public Usuario buscarUsuarioPorEmail(String email) {
+        String sql = "SELECT * FROM Usuario WHERE email LIKE ?";
+        Usuario usuario = null;
+
+        try (Connection connection = databaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "%" + email + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String tipoUsuario = resultSet.getString("tipoUsuario");
+                System.out.println(tipoUsuario);
+                int id = resultSet.getInt("id");
+                if ("locatário".equalsIgnoreCase(tipoUsuario)) {
+                    LocatarioDAO locatarioDAO = new LocatarioDAO();
+                    usuario = locatarioDAO.getLocatarioByUserId(id);
+                } else if ("locador".equalsIgnoreCase(tipoUsuario)) {
+                    LocadorDAO locadorDAO = new LocadorDAO();
+                    usuario = locadorDAO.getLocadorByUserId(id);
+                }
+                System.out.println(usuario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuario;
+    }
+
     public List<Usuario> listarTodosUsuarios() {
         String sql = "SELECT * FROM Usuario";
         List<Usuario> usuarios = new ArrayList<>();

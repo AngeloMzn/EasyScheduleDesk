@@ -57,7 +57,33 @@ public class LocadorDAO {
 
             if (rs.next()) {
                 locador = new Locador(
-                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("tipoUsuario"),
+                        rs.getString("CNPJ")
+                );
+                locador.setnQuadras(rs.getInt("nQuadras"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locador;
+    }
+
+    public Locador getLocadorByUserId(int id) {
+        String sql = "SELECT * FROM locadores WHERE id_Usuario = ?";
+        Locador locador = null;
+
+        try (Connection conn = databaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                locador = new Locador(
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("password"),
@@ -83,7 +109,6 @@ public class LocadorDAO {
 
             while (rs.next()) {
                 Locador locador = new Locador(
-                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("password"),

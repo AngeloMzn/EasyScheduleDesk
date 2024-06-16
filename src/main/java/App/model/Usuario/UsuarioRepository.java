@@ -1,5 +1,5 @@
 package App.model.Usuario;
-/*
+
 import App.model.Locatario.Locatario;
 
 import java.util.List;
@@ -9,19 +9,16 @@ public class UsuarioRepository {
     public UsuarioRepository(){
         this.dao = new UsuarioDAO();
     }
-    public void adicionarUsuario(Usuario usuario){
-
-        String response = dao.adicionarUsuario(usuario);
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
-    }
     public void buscarUsuarioPorId(int id){
 
         String response = String.valueOf(dao.buscarUsuarioPorId(id));
         if(!response.isEmpty()){
             System.out.println(response);
         }
+    }
+
+    public Usuario buscarUsuarioPorEmail(String email){
+        return dao.buscarUsuarioPorEmail(email);
     }
     public void listarTodosUsuarios(){
 
@@ -45,4 +42,3 @@ public class UsuarioRepository {
         }
     }
 }
-*/

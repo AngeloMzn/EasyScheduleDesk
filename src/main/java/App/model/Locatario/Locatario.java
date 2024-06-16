@@ -10,6 +10,7 @@ public class Locatario extends Usuario {
         this.CPF = CPF;
     }
 
+
     public String getCPF() {
         return CPF;
     }

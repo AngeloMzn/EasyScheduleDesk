@@ -1,12 +1,17 @@
 package App.controller;
 
+import App.model.Usuario.Usuario;
+import App.model.Usuario.UsuarioRepository;
 import Core.Util.ControllerHelper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class LoginController {
 
@@ -19,7 +24,7 @@ public class LoginController {
     private Button btn_goto_register;
 
     @FXML
-    private Button btn_registrar;
+    private Button btn_login;
 
     @FXML
     private TextField input_email_login;
@@ -42,6 +47,19 @@ public class LoginController {
             Stage currentStage = (Stage) btn_goto_register.getScene().getWindow();
             helper.loadScene("/register.fxml", currentStage);
         });
+    }
+
+    @FXML
+    void logar(ActionEvent event) {
+        String email =  input_email_login.getText();
+        String senha = input_senha_login.getText();
+        UsuarioRepository repository = new UsuarioRepository();
+        Usuario user = repository.buscarUsuarioPorEmail(email);
+        System.out.println("aqui");
+        if (user != null){
+            System.out.println("Logado !!");
+        }
+
     }
 
 }

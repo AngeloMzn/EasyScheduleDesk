@@ -23,7 +23,7 @@ public class LocatarioDAO {
         }
 
         // Agora adiciona o locatário usando o ID do usuário
-        String sql = "INSERT INTO Locatario (idUsuario, CPF) VALUES (?, ?)";
+        String sql = "INSERT INTO locatario (id_Usuario, CPF) VALUES (?, ?)";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -45,7 +45,7 @@ public class LocatarioDAO {
     }
 
     public Locatario getLocatarioById(int id) {
-        String sql = "SELECT * FROM Locatario WHERE id = ?";
+        String sql = "SELECT * FROM locatario WHERE id = ?";
         Locatario locatario = null;
 
         try (Connection conn = databaseConfig.getConnection();
@@ -56,7 +56,6 @@ public class LocatarioDAO {
 
             if (rs.next()) {
                 locatario = new Locatario(
-                        rs.getInt("idUsuario"),
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("password"),
@@ -64,6 +63,37 @@ public class LocatarioDAO {
                         rs.getString("CPF")
                 );
                 locatario.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locatario;
+    }
+
+    public Locatario getLocatarioByUserId(int id) {
+        String sql = "SELECT u.id, u.nome, u.email, u.password, u.tipoUsuario, l.CPF " +
+                "FROM locatario l " +
+                "JOIN usuario u ON l.id_Usuario = u.id " +
+                "WHERE l.id_Usuario = ?";
+        Locatario locatario = null;
+
+        try (Connection conn = databaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    locatario = new Locatario(
+                            rs.getString("nome"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("tipoUsuario"),
+                            rs.getString("CPF")
+                    );
+                    locatario.setId(rs.getInt("id"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +112,6 @@ public class LocatarioDAO {
 
             while (rs.next()) {
                 Locatario locatario = new Locatario(
-                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getString("email"),
                         rs.getString("password"),

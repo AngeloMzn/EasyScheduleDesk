@@ -50,7 +50,7 @@
             </PasswordField>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="btn_login" mnemonicParsing="false" prefHeight="33.0" prefWidth="96.0" text="Login" />
+                  <Button fx:id="btn_login" onAction="#logar" mnemonicParsing="false" prefHeight="33.0" prefWidth="96.0" text="Login" />
                </children>
                <VBox.margin>
                   <Insets top="50.0" />

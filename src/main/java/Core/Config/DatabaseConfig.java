@@ -13,24 +13,9 @@ public class DatabaseConfig {
     private String password;
 
     public DatabaseConfig() {
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("database.properties")) {
-            Properties properties = new Properties();
-            if (input == null) {
-                System.out.println("Desculpe, não foi possível encontrar o arquivo database.properties");
-                return;
-            }
-            properties.load(input);
-
-            driverClassName = properties.getProperty("jdbc.driverClassName");
-            url = properties.getProperty("jdbc.url");
-            username = properties.getProperty("jdbc.username");
-            password = properties.getProperty("jdbc.password");
-
-            // Carrega o driver JDBC
-            Class.forName(driverClassName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            url = "jdbc:mysql://localhost:3306/db_easyshedule";
+            username ="root";
+            password = "123";
     }
 
     public Connection getConnection() throws SQLException {

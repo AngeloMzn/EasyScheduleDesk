@@ -83,10 +83,14 @@ public class RegisterController {
             Locador locador = new Locador(nome, email, senha, tipoUsuario, cpfCnpj);
             LocadorRepository repository = new LocadorRepository();
             repository.addLocador(locador);
+            Stage currentStage = (Stage) btn_registrar.getScene().getWindow();
+            helper.loadScene("/login.fxml", currentStage);
         }else if(tipoUsuario == "locatário"){
             Locatario locatario = new Locatario(nome, email, senha, tipoUsuario, cpfCnpj);
             LocatarioRepository repository = new LocatarioRepository();
             repository.addLocatario(locatario);
+            Stage currentStage = (Stage) btn_registrar.getScene().getWindow();
+            helper.loadScene("/login.fxml", currentStage);
         }
 
         // Adicione a lógica para processar os dados do registro aqui
