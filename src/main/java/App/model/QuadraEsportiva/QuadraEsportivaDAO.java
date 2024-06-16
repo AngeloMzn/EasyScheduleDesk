@@ -118,16 +118,17 @@ public class QuadraEsportivaDAO {
     }
 
     public String atualizarQuadra(QuadraEsportiva quadra) {
-        String sql = "UPDATE quadraesportiva SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
+        String sql = "UPDATE quadraesportiva SET nome = ?, tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, quadra.getTipo());
-            statement.setDouble(2, quadra.getPrecoPorHora());
-            statement.setInt(3, quadra.isDisponivel());
-            statement.setInt(4, quadra.getDono().getId());
-            statement.setInt(5, quadra.getId());
+            statement.setString(1, quadra.getNome());
+            statement.setString(2, quadra.getTipo());
+            statement.setDouble(3, quadra.getPrecoPorHora());
+            statement.setInt(4, quadra.isDisponivel());
+            statement.setInt(5, quadra.getDono().getId());
+            statement.setInt(6, quadra.getId());
             statement.executeUpdate();
             return "Quadra atualizada com sucesso!";
         } catch (SQLException e) {
@@ -135,7 +136,6 @@ public class QuadraEsportivaDAO {
             return "Erro ao atualizar Quadra: " + e.getMessage();
         }
     }
-
     public String deletarQuadra(int id) {
         String sql = "DELETE FROM quadraesportiva WHERE id = ?";
 
