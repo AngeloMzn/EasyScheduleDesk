@@ -12,11 +12,10 @@ public class LocacaoQuadra {
     Locatario locatario;
     LocalDateTime dataHoraInicio;
     LocalDateTime dataHoraFim;
-    public LocacaoQuadra(int id, QuadraEsportiva quadra, Locatario locatario, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
+    public LocacaoQuadra(QuadraEsportiva quadra, Locatario locatario, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
         if (!quadra.isDisponivel()) {
             throw new IllegalArgumentException("A quadra não está disponível para locação.");
         }
-        this.id = id;
         this.quadra = quadra;
         this.locatario = locatario;
         this.dataHoraInicio = dataHoraInicio;

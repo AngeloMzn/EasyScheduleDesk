@@ -28,7 +28,7 @@ public class LocatarioDAO {
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, usuarioId); // ID do usuário inserido
+            pstmt.setInt(1, usuarioId);
             pstmt.setString(2, locatario.getCPF());
 
             pstmt.executeUpdate();
@@ -103,7 +103,7 @@ public class LocatarioDAO {
     }
 
     public List<Locatario> getAllLocatarios() {
-        String sql = "SELECT * FROM Locatario";
+        String sql = "SELECT * FROM locatario";
         List<Locatario> locatarios = new ArrayList<>();
 
         try (Connection conn = databaseConfig.getConnection();
@@ -129,7 +129,7 @@ public class LocatarioDAO {
     }
 
     public String updateLocatario(Locatario locatario) {
-        String sql = "UPDATE Locatario SET idUsuario = ?, CPF = ? WHERE id = ?";
+        String sql = "UPDATE locatario SET idUsuario = ?, CPF = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -147,7 +147,7 @@ public class LocatarioDAO {
     }
 
     public String deleteLocatario(int id) {
-        String sql = "DELETE FROM Locatario WHERE id = ?";
+        String sql = "DELETE FROM locatario WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

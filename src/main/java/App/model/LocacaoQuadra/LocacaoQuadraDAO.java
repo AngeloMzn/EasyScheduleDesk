@@ -23,7 +23,7 @@ public class LocacaoQuadraDAO {
     }
 
     public String adicionarLocacao(LocacaoQuadra locacao) {
-        String sql = "INSERT INTO LocacaoQuadra (id_QuadraEsportiva, id_Locatario, dataHorarioInicio, dataHorarioFim) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, dataHorarioInicio, dataHorarioFim) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -41,7 +41,7 @@ public class LocacaoQuadraDAO {
     }
 
     public LocacaoQuadra buscarLocacaoPorId(int id) {
-        String sql = "SELECT * FROM LocacaoQuadra WHERE id = ?";
+        String sql = "SELECT * FROM locacaoquadra WHERE id = ?";
         LocacaoQuadra locacao = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -58,7 +58,6 @@ public class LocacaoQuadraDAO {
                 Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
 
                 locacao = new LocacaoQuadra(
-                        resultSet.getInt("id"),
                         quadra,
                         locatario,
                         resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
@@ -74,7 +73,7 @@ public class LocacaoQuadraDAO {
     }
 
     public List<LocacaoQuadra> listarTodasAsLocacoes() {
-        String sql = "SELECT * FROM LocacaoQuadra";
+        String sql = "SELECT * FROM locacaoquadra";
         List<LocacaoQuadra> locacoes = new ArrayList<>();
 
         try (Connection connection = databaseConfig.getConnection();
@@ -89,7 +88,6 @@ public class LocacaoQuadraDAO {
                 Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
 
                 LocacaoQuadra locacao = new LocacaoQuadra(
-                        resultSet.getInt("id"),
                         quadra,
                         locatario,
                         resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
@@ -107,7 +105,7 @@ public class LocacaoQuadraDAO {
     }
 
     public String atualizarLocacao(LocacaoQuadra locacao) {
-        String sql = "UPDATE LocacaoQuadra SET id_QuadraEsportiva = ?, id_Locatario = ?, dataHorarioInicio = ?, dataHorarioFim = ? WHERE id = ?";
+        String sql = "UPDATE locacaoquadra SET id_QuadraEsportiva = ?, id_Locatario = ?, dataHorarioInicio = ?, dataHorarioFim = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -126,7 +124,7 @@ public class LocacaoQuadraDAO {
     }
 
     public String deletarLocacao(int id) {
-        String sql = "DELETE FROM LocacaoQuadra WHERE id = ?";
+        String sql = "DELETE FROM locacaoquadra WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

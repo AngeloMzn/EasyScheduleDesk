@@ -19,7 +19,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String adicionarQuadra(QuadraEsportiva quadra) {
-        String sql = "INSERT INTO quadras_esportivas (nome, tipo, preco_por_hora, disponivel, id_dono) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO quadrasesportivas (nome, tipo, precoPorHora, disponivel, id_Locador) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -39,7 +39,7 @@ public class QuadraEsportivaDAO {
     }
 
     public QuadraEsportiva buscarQuadraPorId(int id) {
-        String sql = "SELECT * FROM quadras_esportivas WHERE id = ?";
+        String sql = "SELECT * FROM quadrasesportivas WHERE id = ?";
         QuadraEsportiva quadra = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -52,15 +52,14 @@ public class QuadraEsportivaDAO {
                 LocadorDAO locadorDAO = new LocadorDAO();
                 Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_dono"));
                 quadra = new QuadraEsportiva(
-                        resultSet.getInt("id"),
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
-                        resultSet.getDouble("preco_por_hora"),
+                        resultSet.getDouble("precoPorHora"),
                         dono
                 );
                 quadra.setDisponivel(resultSet.getBoolean("disponivel"));
                 quadra.setId(resultSet.getInt("id"));
-                int idDono = resultSet.getInt("id_dono");
+                int idDono = resultSet.getInt("id_Locador");
             }
 
         } catch (SQLException e) {
@@ -71,7 +70,7 @@ public class QuadraEsportivaDAO {
     }
 
     public List<QuadraEsportiva> listarTodasAsQuadras() {
-        String sql = "SELECT * FROM quadras_esportivas";
+        String sql = "SELECT * FROM quadrasesportivas";
         List<QuadraEsportiva> quadras = new ArrayList<>();
 
         try (Connection connection = databaseConfig.getConnection();
@@ -80,17 +79,16 @@ public class QuadraEsportivaDAO {
 
             while (resultSet.next()) {
                 LocadorDAO locadorDAO = new LocadorDAO();
-                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_dono"));
+                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_Locador"));
                 QuadraEsportiva quadra = new QuadraEsportiva(
-                        resultSet.getInt("id"),
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
-                        resultSet.getDouble("preco_por_hora"),
+                        resultSet.getDouble("precoporHora"),
                         dono
                 );
                 quadra.setDisponivel(resultSet.getBoolean("disponivel"));
                 quadra.setId(resultSet.getInt("id"));
-                int idDono = resultSet.getInt("id_dono");
+                int idDono = resultSet.getInt("id_Locador");
 
                 quadras.add(quadra);
             }
@@ -103,7 +101,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String atualizarQuadra(QuadraEsportiva quadra) {
-        String sql = "UPDATE quadras_esportivas SET tipo = ?, preco_por_hora = ?, disponivel = ?, id_dono = ? WHERE id = ?";
+        String sql = "UPDATE quadrasesportivas SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -122,7 +120,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String deletarQuadra(int id) {
-        String sql = "DELETE FROM quadras_esportivas WHERE id = ?";
+        String sql = "DELETE FROM quadrasesportivas WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -135,4 +133,11 @@ public class QuadraEsportivaDAO {
             return "Erro ao deletar Quadra: " + e.getMessage();
         }
     }
+
+    public static void main(String[] args) {
+
+    }
 }
+
+
+

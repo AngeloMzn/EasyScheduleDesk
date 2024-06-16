@@ -17,7 +17,7 @@ public class UsuarioDAO {
     }
 
     public int adicionarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO Usuario (nome, email, password, tipoUsuario) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (nome, email, password, tipoUsuario) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -35,19 +35,19 @@ public class UsuarioDAO {
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                return generatedKeys.getInt(1); // Retorna o ID gerado
+                return generatedKeys.getInt(1);
             } else {
                 throw new SQLException("Falha ao obter o ID gerado do usuário.");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1; // Ou outro tratamento de erro adequado
+            return -1;
         }
     }
 
     public Usuario buscarUsuarioPorId(int id) {
-        String sql = "SELECT * FROM Usuario WHERE id = ?";
+        String sql = "SELECT * FROM usuario WHERE id = ?";
         Usuario usuario = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -76,7 +76,7 @@ public class UsuarioDAO {
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {
-        String sql = "SELECT * FROM Usuario WHERE email LIKE ?";
+        String sql = "SELECT * FROM usuario WHERE email LIKE ?";
         Usuario usuario = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -106,7 +106,7 @@ public class UsuarioDAO {
     }
 
     public List<Usuario> listarTodosUsuarios() {
-        String sql = "SELECT * FROM Usuario";
+        String sql = "SELECT * FROM usuario";
         List<Usuario> usuarios = new ArrayList<>();
 
         try (Connection connection = databaseConfig.getConnection();
@@ -135,7 +135,7 @@ public class UsuarioDAO {
     }
 
     public String atualizarUsuario(Usuario usuario) {
-        String sql = "UPDATE Usuario SET nome = ?, email = ?, password = ?, tipoUsuario = ? WHERE id = ?";
+        String sql = "UPDATE usuario SET nome = ?, email = ?, password = ?, tipoUsuario = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -154,7 +154,7 @@ public class UsuarioDAO {
     }
 
     public String deletarUsuario(int id) {
-        String sql = "DELETE FROM Usuario WHERE id = ?";
+        String sql = "DELETE FROM usuario WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

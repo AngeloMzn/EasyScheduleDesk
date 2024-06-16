@@ -103,7 +103,10 @@ public class LocadorDAO {
     }
 
     public List<Locador> getAllLocadores() {
-        String sql = "SELECT * FROM locadores";
+        String sql = "SELECT l.CNPJ, l.nQuadras, u.nome, u.email, u.password, u.tipoUsuario " +
+                     "FROM locadores l " +
+                     "JOIN usuarios u ON l.id_Usuario = u.id";
+
         List<Locador> locadores = new ArrayList<>();
 
         try (Connection conn = databaseConfig.getConnection();
@@ -111,16 +114,18 @@ public class LocadorDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                Locador locador = new Locador(
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("tipoUsuario"),
-                        rs.getString("CNPJ")
-                );
-                locador.setnQuadras(rs.getInt("nQuadras"));
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String tipoUsuario = rs.getString("tipoUsuario");
+                String cnpj = rs.getString("CNPJ");
+                int nQuadras = rs.getInt("nQuadras");
+
+                Locador locador = new Locador(nome, email, password, tipoUsuario, cnpj);
+                locador.setnQuadras(nQuadras);
                 locadores.add(locador);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -129,7 +134,7 @@ public class LocadorDAO {
     }
 
     public String updateLocador(Locador locador) {
-        String sql = "UPDATE locadores SET idUsuario = ?, CNPJ = ?, nQuadras = ? WHERE id = ?";
+        String sql = "UPDATE locadores SET id = ?, CNPJ = ?, nQuadras = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
