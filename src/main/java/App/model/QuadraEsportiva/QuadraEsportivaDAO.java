@@ -70,7 +70,7 @@ public class QuadraEsportivaDAO {
     }
 
     public List<QuadraEsportiva> listarTodasAsQuadras() {
-        String sql = "SELECT q.id, q.nome AS quadraNome, q.tipo, q.precoporHora, q.id_Locador, q.disponivel, " +
+        String sql = "SELECT q.id, q.nome AS quadraNome, q.tipo, q.precoPorHora, q.id_Locador, q.disponivel, " +
                 "l.id AS locadorId, l.CNPJ, l.nQuadras, " +
                 "u.id AS usuarioId, u.nome AS usuarioNome, u.email, u.password, u.tipoUsuario " +
                 "FROM quadraesportiva q " +

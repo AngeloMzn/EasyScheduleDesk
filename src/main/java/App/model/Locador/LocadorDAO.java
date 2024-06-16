@@ -46,7 +46,7 @@ public class LocadorDAO {
     }
 
     public Locador getLocadorById(int id) {
-        String sql = "SELECT * FROM locadores WHERE id = ?";
+        String sql = "SELECT * FROM locador WHERE id = ?";
         Locador locador = null;
 
         try (Connection conn = databaseConfig.getConnection();
@@ -136,7 +136,7 @@ public class LocadorDAO {
     }
 
     public String updateLocador(Locador locador) {
-        String sql = "UPDATE locadores SET id = ?, CNPJ = ?, nQuadras = ? WHERE id = ?";
+        String sql = "UPDATE locador SET id = ?, CNPJ = ?, nQuadras = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -155,7 +155,7 @@ public class LocadorDAO {
     }
 
     public String deleteLocador(int id) {
-        String sql = "DELETE FROM locadores WHERE id = ?";
+        String sql = "DELETE FROM locador WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

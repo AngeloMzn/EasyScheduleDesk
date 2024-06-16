@@ -129,7 +129,7 @@ public class LocatarioDAO {
     }
 
     public String updateLocatario(Locatario locatario) {
-        String sql = "UPDATE locatario SET idUsuario = ?, CPF = ? WHERE id = ?";
+        String sql = "UPDATE locatario SET id_Usuario = ?, CPF = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
