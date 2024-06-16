@@ -19,7 +19,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String adicionarQuadra(QuadraEsportiva quadra) {
-        String sql = "INSERT INTO quadrasesportivas (nome, tipo, precoPorHora, disponivel, id_Locador) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO quadrasesportiva (nome, tipo, precoPorHora, disponivel, id_Locador) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -39,7 +39,7 @@ public class QuadraEsportivaDAO {
     }
 
     public QuadraEsportiva buscarQuadraPorId(int id) {
-        String sql = "SELECT * FROM quadrasesportivas WHERE id = ?";
+        String sql = "SELECT * FROM quadrasesportiva WHERE id = ?";
         QuadraEsportiva quadra = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -70,7 +70,13 @@ public class QuadraEsportivaDAO {
     }
 
     public List<QuadraEsportiva> listarTodasAsQuadras() {
-        String sql = "SELECT * FROM quadrasesportivas";
+        String sql = "SELECT q.id, q.nome AS quadraNome, q.tipo, q.precoporHora, q.disponivel, " +
+                "l.id AS locadorId, l.CNPJ, l.nQuadras, " +
+                "u.id AS usuarioId, u.nome AS usuarioNome, u.email, u.password, u.tipoUsuario " +
+                "FROM quadrasesportiva q " +
+                "JOIN locador l ON q.id_Locador = l.id " +
+                "JOIN usuario u ON l.id_Usuario = u.id";
+
         List<QuadraEsportiva> quadras = new ArrayList<>();
 
         try (Connection connection = databaseConfig.getConnection();
@@ -78,17 +84,27 @@ public class QuadraEsportivaDAO {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                LocadorDAO locadorDAO = new LocadorDAO();
-                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_Locador"));
-                QuadraEsportiva quadra = new QuadraEsportiva(
-                        resultSet.getString("nome"),
-                        resultSet.getString("tipo"),
-                        resultSet.getDouble("precoporHora"),
-                        dono
-                );
-                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
-                quadra.setId(resultSet.getInt("id"));
-                int idDono = resultSet.getInt("id_Locador");
+                int locadorId = resultSet.getInt("locadorId");
+                String usuarioNome = resultSet.getString("usuarioNome");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String tipoUsuario = resultSet.getString("tipoUsuario");
+                String cnpj = resultSet.getString("CNPJ");
+                int nQuadras = resultSet.getInt("nQuadras");
+
+                Locador locador = new Locador(usuarioNome, email, password, tipoUsuario, cnpj);
+                locador.setId(locadorId);
+                locador.setnQuadras(nQuadras);
+
+                int quadraId = resultSet.getInt("id");
+                String quadraNome = resultSet.getString("quadraNome");
+                String tipo = resultSet.getString("tipo");
+                double precoPorHora = resultSet.getDouble("precoporHora");
+                boolean disponivel = resultSet.getBoolean("disponivel");
+
+                QuadraEsportiva quadra = new QuadraEsportiva(quadraNome, tipo, precoPorHora, locador);
+                quadra.setId(quadraId);
+                quadra.setDisponivel(disponivel);
 
                 quadras.add(quadra);
             }
@@ -101,7 +117,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String atualizarQuadra(QuadraEsportiva quadra) {
-        String sql = "UPDATE quadrasesportivas SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
+        String sql = "UPDATE quadrasesportiva SET tipo = ?, precoPorHora = ?, disponivel = ?, id_Locador = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -120,7 +136,7 @@ public class QuadraEsportivaDAO {
     }
 
     public String deletarQuadra(int id) {
-        String sql = "DELETE FROM quadrasesportivas WHERE id = ?";
+        String sql = "DELETE FROM quadrasesportiva WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -132,10 +148,6 @@ public class QuadraEsportivaDAO {
             e.printStackTrace();
             return "Erro ao deletar Quadra: " + e.getMessage();
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }
 
