@@ -23,7 +23,7 @@ public class LocadorDAO {
         }
 
         // Agora adiciona o locador usando o ID do usuário
-        String sql = "INSERT INTO Locador (idUsuario, CNPJ, nQuadras) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO locador (id_Usuario, CNPJ, nQuadras) VALUES (?, ?, ?)";
 
         try (Connection conn = databaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -73,7 +73,10 @@ public class LocadorDAO {
     }
 
     public Locador getLocadorByUserId(int id) {
-        String sql = "SELECT * FROM locadores WHERE id_Usuario = ?";
+        String sql = "SELECT u.id, u.nome, u.email, u.password, u.tipoUsuario, l.CNPJ, l.nQuadras " +
+                "FROM locador l " +
+                "JOIN usuario u ON l.id_Usuario = u.id " +
+                "WHERE l.id_Usuario = ?";
         Locador locador = null;
 
         try (Connection conn = databaseConfig.getConnection();

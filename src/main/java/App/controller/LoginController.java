@@ -55,9 +55,17 @@ public class LoginController {
         String senha = input_senha_login.getText();
         UsuarioRepository repository = new UsuarioRepository();
         Usuario user = repository.buscarUsuarioPorEmail(email);
-        System.out.println("aqui");
-        if (user != null){
+
+        if (user != null && senha.equals(user.getPassword())){
             System.out.println("Logado !!");
+            Stage currentStage = (Stage) btn_login.getScene().getWindow();
+            if(user.getTipoUsuario().equals("locatário")){
+                helper.loadScene("/locatario.fxml", currentStage);
+            }else{
+                helper.loadScene("/locador.fxml", currentStage);
+            }
+        }else{
+            System.out.println("Credenciais invalidas !");
         }
 
     }
