@@ -12,19 +12,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.LocadorController">
    <children>
       <AnchorPane prefHeight="455.0" prefWidth="722.0">
          <children>
             <TableView fx:id="table_quadras" layoutX="12.0" layoutY="119.0" prefHeight="229.0" prefWidth="697.0">
                <columns>
-                  <TableColumn prefWidth="56.0" text="id" />
-                  <TableColumn prefWidth="150.0" text="nome" />
-                  <TableColumn prefWidth="121.0" text="tipo" />
-                  <TableColumn prefWidth="89.0" text="preço/h" />
-                  <TableColumn prefWidth="136.0" text="dono" />
-                  <TableColumn prefWidth="144.0" text="disponível ?" />
+                  <TableColumn fx:id="quadra_cell_id" prefWidth="56.0" text="id" />
+                  <TableColumn fx:id="nome_cell_id" prefWidth="150.0" text="nome" />
+                  <TableColumn fx:id="tipo_cell_id" prefWidth="121.0" text="tipo" />
+                  <TableColumn fx:id="preco_cell_id" prefWidth="89.0" text="preço/h" />
+                  <TableColumn fx:id="dono_cell_id" prefWidth="136.0" text="dono" />
+                  <TableColumn fx:id="disponivel_cell_id" prefWidth="144.0" text="disponível ?" />
                </columns>
             </TableView>
             <HBox alignment="TOP_RIGHT" layoutX="30.0" layoutY="348.0" prefHeight="73.0" prefWidth="680.0" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="12.0">
@@ -34,17 +33,17 @@
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_delete_quadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="excluir">
+                  <Button fx:id="btn_delete_quadra" onAction="#deletarQuadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="excluir">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_edit_quadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Editar">
+                  <Button fx:id="btn_edit_quadra" onAction="#editarQuadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Editar">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_add_quadra" onAction="#novaQuadra" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="novo">
+                  <Button fx:id="btn_add_quadra" mnemonicParsing="false" onAction="#novaQuadra" prefHeight="25.0" prefWidth="102.0" text="novo">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>

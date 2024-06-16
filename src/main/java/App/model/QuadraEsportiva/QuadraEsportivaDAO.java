@@ -50,7 +50,7 @@ public class QuadraEsportivaDAO {
 
             if (resultSet.next()) {
                 LocadorDAO locadorDAO = new LocadorDAO();
-                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_dono"));
+                Locador dono = locadorDAO.getLocadorById(resultSet.getInt("id_locador"));
                 quadra = new QuadraEsportiva(
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),

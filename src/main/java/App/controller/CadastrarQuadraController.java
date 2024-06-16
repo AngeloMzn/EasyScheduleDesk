@@ -94,8 +94,6 @@ public class CadastrarQuadraController {
             int idLocador = locadorSelecionado.getId();
             System.out.println("ID do locador selecionado: " + idLocador);
 
-            // Aqui você pode realizar a lógica para salvar a quadra com o ID do locador
-            // Por exemplo: quadraRepository.salvarQuadra(nomeQuadra, precoQuadra, tipoQuadra, disponivel, idLocador);
         }
     }
 

@@ -1,5 +1,6 @@
 package Core.Util;
 
+import App.controller.EditarQuadraController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,7 +38,25 @@ public class ControllerHelper {
         }
     }
 
+    public void openEditarQuadra(int idQuadra, Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editar_quadra.fxml"));
+            Parent root = loader.load();
 
+            EditarQuadraController controller = loader.getController();
+
+            controller.initData(idQuadra);
+
+            Scene scene = new Scene(root);
+            Stage editStage = new Stage();
+            editStage.setScene(scene);
+            editStage.setTitle("Editar Quadra Esportiva");
+            editStage.initOwner(stage);
+            editStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public  boolean isNull(List<?> lista) {
         if (lista == null || lista.isEmpty()) {

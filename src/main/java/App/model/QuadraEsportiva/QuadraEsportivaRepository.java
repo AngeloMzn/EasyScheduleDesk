@@ -16,12 +16,10 @@ public class QuadraEsportivaRepository {
             System.out.println(response);
         }
     }
-    public void buscarQuadraPorId(int id){
+    public QuadraEsportiva buscarQuadraPorId(int id){
 
-        String response = String.valueOf(dao.buscarQuadraPorId(id));
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.buscarQuadraPorId(id);
+
     }
     public List<QuadraEsportiva> listarTodasAsQuadras(){
 
