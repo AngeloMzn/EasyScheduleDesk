@@ -103,7 +103,7 @@ public class LocadorDAO {
     }
 
     public List<Locador> getAllLocadores() {
-        String sql = "SELECT l.CNPJ, l.nQuadras, u.nome, u.email, u.password, u.tipoUsuario " +
+        String sql = "SELECT l.id, l.CNPJ, l.nQuadras, u.nome, u.email, u.password, u.tipoUsuario " +
                      "FROM locador l " +
                      "JOIN usuario u ON l.id_Usuario = u.id";
 
@@ -114,6 +114,7 @@ public class LocadorDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
@@ -122,6 +123,7 @@ public class LocadorDAO {
                 int nQuadras = rs.getInt("nQuadras");
 
                 Locador locador = new Locador(nome, email, password, tipoUsuario, cnpj);
+                locador.setId(id);
                 locador.setnQuadras(nQuadras);
                 locadores.add(locador);
             }
