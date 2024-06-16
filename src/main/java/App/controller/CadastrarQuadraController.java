@@ -3,6 +3,9 @@ package App.controller;
 import App.model.Locador.Locador;
 import App.model.Locador.LocadorRepository;
 
+import App.model.QuadraEsportiva.QuadraEsportiva;
+import App.model.QuadraEsportiva.QuadraEsportivaRepository;
+import Core.Util.ControllerHelper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +22,13 @@ import java.util.stream.Collectors;
 
 public class CadastrarQuadraController {
 
+    ControllerHelper helper = new ControllerHelper();
+
     @FXML
     private Button btn_salvar_quadra;
+
+    @FXML
+    private Button btn_backto_locador;
 
     @FXML
     private ChoiceBox<String> choice_box_disponivel;
@@ -41,12 +49,7 @@ public class CadastrarQuadraController {
     private Label login_tittle;
 
     private LocadorRepository locadorRepository = new LocadorRepository();
-    private List<Locador> locadores = locadorRepository.getAllLocadores();;
-
-    @FXML
-    void logar(ActionEvent event) {
-
-    }
+    private List<Locador> locadores = locadorRepository.getAllLocadores();
 
     @FXML
     public void initialize() {
@@ -73,28 +76,28 @@ public class CadastrarQuadraController {
     @FXML
     void salvarQuadra(ActionEvent event) {
         String nomeQuadra = input_nome_quadra.getText();
-        String precoQuadra = preco_input.getText();
+        Double precoQuadra = Double.parseDouble(preco_input.getText());
         String tipoQuadra = tipo_input.getText();
-        String disponivel = choice_box_disponivel.getValue();
-
+        int disponivel = choice_box_disponivel.getValue() == "sim" ? 1 : 0;
         String nomeLocadorSelecionado = combo_dono_quadra.getValue();
-
         Locador locadorSelecionado = null;
-
-        // Procura pelo Locador correspondente ao nome selecionado
         for (Locador locador : locadores) {
             if (locador.getNome().equals(nomeLocadorSelecionado)) {
                 locadorSelecionado = locador;
                 break;
             }
         }
-        System.out.println(locadorSelecionado);
+        QuadraEsportiva quadraEsportiva = new QuadraEsportiva(nomeQuadra,tipoQuadra ,precoQuadra, disponivel, locadorSelecionado);
+        QuadraEsportivaRepository quadraEsportivaRepository = new QuadraEsportivaRepository();
+        quadraEsportivaRepository.adicionarQuadra(quadraEsportiva);
+        Stage currentStage = (Stage) btn_salvar_quadra.getScene().getWindow();
+        helper.loadScene("/locador.fxml", currentStage);
+    }
 
-        if (locadorSelecionado != null) {
-            int idLocador = locadorSelecionado.getId();
-            System.out.println("ID do locador selecionado: " + idLocador);
-
-        }
+    @FXML
+    public void voltar(){
+        Stage currentStage = (Stage) btn_backto_locador.getScene().getWindow();
+        helper.loadScene("/locador.fxml", currentStage);
     }
 
 }

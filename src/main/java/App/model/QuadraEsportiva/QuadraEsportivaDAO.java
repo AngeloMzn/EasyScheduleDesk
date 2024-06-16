@@ -27,7 +27,7 @@ public class QuadraEsportivaDAO {
             statement.setString(1, quadra.getNome());
             statement.setString(2, quadra.getTipo());
             statement.setDouble(3, quadra.getPrecoPorHora());
-            statement.setBoolean(4, quadra.isDisponivel());
+            statement.setInt(4, quadra.isDisponivel());
             statement.setInt(5, quadra.getDono().getId());
 
             statement.executeUpdate();
@@ -55,10 +55,10 @@ public class QuadraEsportivaDAO {
                         resultSet.getString("nome"),
                         resultSet.getString("tipo"),
                         resultSet.getDouble("precoPorHora"),
-                        resultSet.getBoolean("disponivel"),
+                        resultSet.getInt("disponivel"),
                         dono
                 );
-                quadra.setDisponivel(resultSet.getBoolean("disponivel"));
+                quadra.setDisponivel(resultSet.getInt("disponivel"));
                 quadra.setId(resultSet.getInt("id"));
                 int idDono = resultSet.getInt("id_Locador");
             }
@@ -101,7 +101,7 @@ public class QuadraEsportivaDAO {
                 String quadraNome = resultSet.getString("quadraNome");
                 String tipo = resultSet.getString("tipo");
                 double precoPorHora = resultSet.getDouble("precoporHora");
-                boolean disponivel = resultSet.getBoolean("disponivel");
+                int disponivel = resultSet.getInt("disponivel");
 
                 QuadraEsportiva quadra = new QuadraEsportiva(quadraNome, tipo, precoPorHora, disponivel, locador);
                 quadra.setId(quadraId);
@@ -125,7 +125,7 @@ public class QuadraEsportivaDAO {
 
             statement.setString(1, quadra.getTipo());
             statement.setDouble(2, quadra.getPrecoPorHora());
-            statement.setBoolean(3, quadra.isDisponivel());
+            statement.setInt(3, quadra.isDisponivel());
             statement.setInt(4, quadra.getDono().getId());
             statement.setInt(5, quadra.getId());
             statement.executeUpdate();

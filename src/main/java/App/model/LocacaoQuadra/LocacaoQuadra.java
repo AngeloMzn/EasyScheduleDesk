@@ -13,14 +13,13 @@ public class LocacaoQuadra {
     LocalDateTime dataHoraInicio;
     LocalDateTime dataHoraFim;
     public LocacaoQuadra(QuadraEsportiva quadra, Locatario locatario, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
-        if (!quadra.isDisponivel()) {
+        if (quadra.isDisponivel() == 0) {
             throw new IllegalArgumentException("A quadra não está disponível para locação.");
         }
         this.quadra = quadra;
         this.locatario = locatario;
         this.dataHoraInicio = dataHoraInicio;
         this.dataHoraFim = dataHoraFim;
-        this.quadra.setDisponivel(false);
     }
 
     public int getId() {

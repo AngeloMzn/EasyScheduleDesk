@@ -3,6 +3,8 @@ package App.controller;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 import App.model.QuadraEsportiva.QuadraEsportivaRepository;
 import Core.Util.ControllerHelper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 public class LocadorController {
@@ -60,7 +63,7 @@ public class LocadorController {
     private TableColumn<QuadraEsportiva, Double> preco_cell_id;
 
     @FXML
-    private TableColumn<QuadraEsportiva, Boolean> disponivel_cell_id;
+    private TableColumn<QuadraEsportiva, String> disponivel_cell_id;
 
     @FXML
     private TableColumn<QuadraEsportiva, String> dono_cell_id;
@@ -77,16 +80,26 @@ public class LocadorController {
         quadra_cell_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nome_cell_id.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tipo_cell_id.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        preco_cell_id.setCellValueFactory(new PropertyValueFactory<>("preco"));
-        disponivel_cell_id.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
-        dono_cell_id.setCellValueFactory(new PropertyValueFactory<>("dono"));
+        preco_cell_id.setCellValueFactory(new PropertyValueFactory<>("precoPorHora"));
+
+        // Define disponivel_cell_id column with a custom cell value factory
+        disponivel_cell_id.setCellValueFactory(cellData -> {
+            int disponivel = cellData.getValue().isDisponivel(); // Assuming isDisponivel() returns a boolean
+            StringProperty value = new SimpleStringProperty(disponivel == 1 ? "Sim" : "Não");
+            return value;
+        });
+
+        // Configure the table to allow editing of the dono_cell_id column (if needed)
+        dono_cell_id.setCellValueFactory(cellData -> {
+            StringProperty value = new SimpleStringProperty(cellData.getValue().getDono().getNome());
+            return value;
+        });
+        dono_cell_id.setCellFactory(TextFieldTableCell.forTableColumn());
 
         // Popular a tabela com os dados
         quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
         table_quadras.setItems(quadrasList);
-
     }
-
     @FXML
     public void deletarQuadra() {
         QuadraEsportiva quadraSelecionada = table_quadras.getSelectionModel().getSelectedItem();

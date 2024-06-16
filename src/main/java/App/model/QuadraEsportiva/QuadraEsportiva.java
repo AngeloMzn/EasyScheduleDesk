@@ -9,12 +9,12 @@ public class QuadraEsportiva {
     String tipo;
     Double precoPorHora;
     Locador dono;
-    boolean disponivel;
-    public QuadraEsportiva(String nome, String tipo, double precoPorHora, boolean disponivel, Locador dono) {
+    int disponivel;
+    public QuadraEsportiva(String nome, String tipo, double precoPorHora, int disponivel, Locador dono) {
         this.nome = nome;
         this.tipo = tipo;
         this.precoPorHora = precoPorHora;
-        this.disponivel = true;
+        this.disponivel = 1;
         this.dono = dono;
     }
 
@@ -54,11 +54,11 @@ public class QuadraEsportiva {
     public void setDono(Locador dono) {
         this.dono = dono;
     }
-    public boolean isDisponivel() {
+    public int isDisponivel() {
         return disponivel;
     }
 
-    public void setDisponivel(boolean disponivel) {
+    public void setDisponivel(int disponivel) {
         this.disponivel = disponivel;
     }
 

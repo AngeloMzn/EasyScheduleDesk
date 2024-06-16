@@ -32,7 +32,7 @@ public class QuadraEsportivaRepository {
 
     public void atualizarQuadra(QuadraEsportiva quadra){
 
-        String response = dao.adicionarQuadra(quadra);
+        String response = dao.atualizarQuadra(quadra);
         if(!response.isEmpty()){
             System.out.println(response);
         }

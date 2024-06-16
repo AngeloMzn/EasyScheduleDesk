@@ -47,6 +47,10 @@ public class ControllerHelper {
 
             controller.initData(idQuadra);
 
+            if (stage != null) {
+                stage.close();
+            }
+
             Scene scene = new Scene(root);
             Stage editStage = new Stage();
             editStage.setScene(scene);
