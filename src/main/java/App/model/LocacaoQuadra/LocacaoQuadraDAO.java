@@ -55,7 +55,7 @@ public class LocacaoQuadraDAO {
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
 
                 LocatarioDAO locatarioDAO = new LocatarioDAO();
-                Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
+                Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
 
                 locacao = new LocacaoQuadra(
                         quadra,
@@ -81,19 +81,18 @@ public class LocacaoQuadraDAO {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
+                int idQuadra = resultSet.getInt("id_QuadraEsportiva");
+                int idLocatario = resultSet.getInt("id_Locatario");
+                LocalDateTime dataHorarioInicio = resultSet.getObject("dataHorarioInicio", LocalDateTime.class);
+                LocalDateTime dataHorarioFim = resultSet.getObject("dataHorarioFim", LocalDateTime.class);
+
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
 
                 LocatarioDAO locatarioDAO = new LocatarioDAO();
-                Locatario locatario = locatarioDAO.getLocatarioById(resultSet.getInt("id_Locatario"));
+                Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
 
-                LocacaoQuadra locacao = new LocacaoQuadra(
-                        quadra,
-                        locatario,
-                        resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
-                        resultSet.getObject("dataHorarioFim", LocalDateTime.class)
-                );
-
+                LocacaoQuadra locacao = new LocacaoQuadra(quadra, locatario, dataHorarioInicio, dataHorarioFim);
                 locacoes.add(locacao);
             }
 

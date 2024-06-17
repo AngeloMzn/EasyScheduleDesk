@@ -14,13 +14,16 @@ public class LocadorRepository {
             System.out.println(response);
         }
     }
-    public void getLocadorById(int id){
+    public Locador getLocadorById(int id){
 
-        String response = String.valueOf(dao.getLocadorById(id));
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.getLocadorById(id);
     }
+
+    public Locador getLocadorByUserId(int id){
+
+        return dao.getLocadorByUserId(id);
+    }
+
     public List<Locador> getAllLocadores(){
         return dao.getAllLocadores();
     }

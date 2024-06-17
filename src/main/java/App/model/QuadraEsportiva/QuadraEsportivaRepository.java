@@ -23,11 +23,7 @@ public class QuadraEsportivaRepository {
     }
     public List<QuadraEsportiva> listarTodasAsQuadras(){
 
-        List<QuadraEsportiva> response = dao.listarTodasAsQuadras();
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
-        return response;
+        return dao.listarTodasAsQuadras();
     }
 
     public void atualizarQuadra(QuadraEsportiva quadra){

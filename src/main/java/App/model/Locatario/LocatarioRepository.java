@@ -17,19 +17,17 @@ public class LocatarioRepository {
             System.out.println(response);
         }
     }
-    public void getLocatarioById(int id){
+    public Locatario getLocatarioById(int id){
 
-        String response = String.valueOf(dao.getLocatarioById(id));
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.getLocatarioById(id);
     }
-    public void getAllLocatarios(){
+    public Locatario getLocatarioByUserId(int id){
 
-        List<Locatario> response = dao.getAllLocatarios();
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.getLocatarioByUserId(id);
+    }
+    public List<Locatario> getAllLocatarios(){
+
+        return dao.getAllLocatarios();
     }
     public void updateLocatario(Locatario locatario){
 

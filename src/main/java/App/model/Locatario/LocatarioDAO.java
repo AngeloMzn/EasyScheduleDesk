@@ -103,7 +103,10 @@ public class LocatarioDAO {
     }
 
     public List<Locatario> getAllLocatarios() {
-        String sql = "SELECT * FROM locatario";
+        String sql = "SELECT l.id, l.CPF, u.nome, u.email, u.password, u.tipoUsuario " +
+                     "FROM locatario l " +
+                     "JOIN usuario u ON l.id_Usuario = u.id";
+
         List<Locatario> locatarios = new ArrayList<>();
 
         try (Connection conn = databaseConfig.getConnection();
@@ -111,14 +114,15 @@ public class LocatarioDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                Locatario locatario = new Locatario(
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("tipoUsuario"),
-                        rs.getString("CPF")
-                );
-                //locatario.setId(rs.getInt("id"));
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String tipoUsuario = rs.getString("tipoUsuario");
+                String CPF = rs.getString("CPF");
+
+                Locatario locatario = new Locatario(nome, email, password, tipoUsuario, CPF);
+                locatario.setId(id);
                 locatarios.add(locatario);
             }
         } catch (SQLException e) {

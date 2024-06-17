@@ -16,19 +16,13 @@ public class LocacaoQuadraRepository {
             System.out.println(response);
         }
     }
-    public void buscarLocacaoPorId(int id){
+    public LocacaoQuadra buscarLocacaoPorId(int id){
 
-        String response = String.valueOf(dao.buscarLocacaoPorId(id));
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.buscarLocacaoPorId(id);
     }
-    public void listarTodasAsLocacoes(){
+    public List<LocacaoQuadra> listarTodasAsLocacoes(){
 
-        List<LocacaoQuadra> response = dao.listarTodasAsLocacoes();
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.listarTodasAsLocacoes();
     }
     public void atualizarLocacao(LocacaoQuadra locacao){
 
