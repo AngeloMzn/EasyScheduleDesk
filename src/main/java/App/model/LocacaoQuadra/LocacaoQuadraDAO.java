@@ -23,15 +23,16 @@ public class LocacaoQuadraDAO {
     }
 
     public String adicionarLocacao(LocacaoQuadra locacao) {
-        String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, dataHorarioInicio, dataHorarioFim) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, data, horaInicio, horaFim) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, locacao.getQuadra().getId());
             statement.setInt(2, locacao.getLocatario().getId());
-            statement.setObject(3, locacao.getDataHoraInicio());
-            statement.setObject(4, locacao.getDataHoraFim());
+            statement.setObject(3, locacao.getData());
+            statement.setString(5, locacao.getHoraInicio());
+            statement.setString(6, locacao.getHoraFim());
             statement.executeUpdate();
             return "Locação salva com sucesso!";
         } catch (SQLException e) {
@@ -60,8 +61,9 @@ public class LocacaoQuadraDAO {
                 locacao = new LocacaoQuadra(
                         quadra,
                         locatario,
-                        resultSet.getObject("dataHorarioInicio", LocalDateTime.class),
-                        resultSet.getObject("dataHorarioFim", LocalDateTime.class)
+                        resultSet.getObject("data", LocalDateTime.class),
+                        resultSet.getString("horaInicio"),
+                        resultSet.getString("horaFim")
                 );
             }
 
@@ -83,8 +85,9 @@ public class LocacaoQuadraDAO {
             while (resultSet.next()) {
                 int idQuadra = resultSet.getInt("id_QuadraEsportiva");
                 int idLocatario = resultSet.getInt("id_Locatario");
-                LocalDateTime dataHorarioInicio = resultSet.getObject("dataHorarioInicio", LocalDateTime.class);
-                LocalDateTime dataHorarioFim = resultSet.getObject("dataHorarioFim", LocalDateTime.class);
+                LocalDateTime data = resultSet.getObject("data", LocalDateTime.class);
+                String horaInicio = resultSet.getString("horaInicio");
+                String horaFim = resultSet.getString("horaFim");
 
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
@@ -92,7 +95,7 @@ public class LocacaoQuadraDAO {
                 LocatarioDAO locatarioDAO = new LocatarioDAO();
                 Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
 
-                LocacaoQuadra locacao = new LocacaoQuadra(quadra, locatario, dataHorarioInicio, dataHorarioFim);
+                LocacaoQuadra locacao = new LocacaoQuadra(quadra, locatario, data, horaInicio, horaFim);
                 locacoes.add(locacao);
             }
 
@@ -104,16 +107,17 @@ public class LocacaoQuadraDAO {
     }
 
     public String atualizarLocacao(LocacaoQuadra locacao) {
-        String sql = "UPDATE locacaoquadra SET id_QuadraEsportiva = ?, id_Locatario = ?, dataHorarioInicio = ?, dataHorarioFim = ? WHERE id = ?";
+        String sql = "UPDATE locacaoquadra SET id_QuadraEsportiva = ?, id_Locatario = ?, data = ?, horaInicio = ?, horaFim = ? WHERE id = ?";
 
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, locacao.getQuadra().getId());
             statement.setInt(2, locacao.getLocatario().getId());
-            statement.setObject(3, locacao.getDataHoraInicio());
-            statement.setObject(4, locacao.getDataHoraFim());
-            statement.setInt(5, locacao.getId());
+            statement.setObject(3, locacao.getData());
+            statement.setString(5, locacao.getHoraInicio());
+            statement.setString(6, locacao.getHoraFim());
+            statement.setInt(7, locacao.getId());
             statement.executeUpdate();
             return "Locação atualizada com sucesso!";
         } catch (SQLException e) {
