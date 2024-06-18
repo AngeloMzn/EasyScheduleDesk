@@ -75,12 +75,12 @@
                         <Insets bottom="5.0" left="5.0" top="10.0" />
                     </VBox.margin>
                 </ChoiceBox>
-                <Label fx:id="label_cpf_cnpj" prefHeight="25.0" prefWidth="86.0" text="CPF/CNPJ:" visible="false">
+                <Label fx:id="label_doc1" prefHeight="25.0" prefWidth="86.0" text="CPF/CNPJ:" visible="false">
                     <padding>
                         <Insets left="5.0" />
                     </padding>
                 </Label>
-                <TextField fx:id="input_cpf_cnpj" prefHeight="25.0" prefWidth="163.0" visible="false">
+                <TextField fx:id="input_doc1" prefHeight="25.0" prefWidth="163.0" visible="false">
                     <padding>
                         <Insets bottom="10.0" left="5.0" right="5.0" />
                     </padding>

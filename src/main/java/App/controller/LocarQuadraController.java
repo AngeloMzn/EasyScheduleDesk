@@ -39,7 +39,7 @@ public class LocarQuadraController extends Controller{
     void locar(ActionEvent event) {
         LocacaoQuadraRepository locacaoQuadraRepository = new LocacaoQuadraRepository();
         QuadraEsportivaRepository quadraEsportivaRepository = new QuadraEsportivaRepository();
-        QuadraEsportiva quadra  = quadraEsportivaRepository.buscarQuadraPorId(idQuadra);
+        QuadraEsportiva quadra  = quadraEsportivaRepository.buscarQuadrasPorId(idQuadra);
 
     }
 

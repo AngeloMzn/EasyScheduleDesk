@@ -1,6 +1,5 @@
 package App.model.QuadraEsportiva;
 
-import App.model.LocacaoQuadra.LocacaoQuadraDAO;
 import java.util.List;
 
 public class QuadraEsportivaRepository {
@@ -16,7 +15,7 @@ public class QuadraEsportivaRepository {
             System.out.println(response);
         }
     }
-    public QuadraEsportiva buscarQuadraPorId(int id){
+    public QuadraEsportiva buscarQuadrasPorId(int id){
 
         return dao.buscarQuadraPorId(id);
 
@@ -24,6 +23,26 @@ public class QuadraEsportivaRepository {
     public List<QuadraEsportiva> listarTodasAsQuadras(){
 
         return dao.listarTodasAsQuadras();
+    }
+
+    public List<QuadraEsportiva> buscarQuadrasPorLocador(int idLocador){
+
+        return dao.listarQuadrasPorLocador(idLocador);
+    }
+
+    public List<QuadraEsportiva> buscarQuadrasPorNome(String nome){
+
+        return dao.listarQuadrasPorNome(nome);
+    }
+
+    public List<QuadraEsportiva> buscarQuadrasPorTipo(String tipo){
+
+        return dao.listarQuadrasPorTipo(tipo);
+    }
+
+    public List<QuadraEsportiva> buscarQuadrasPorDisponibilidade(boolean disponibilidade){
+
+        return dao.listarQuadrasPorDisponibilidade((disponibilidade ? 1 : 0));
     }
 
     public void atualizarQuadra(QuadraEsportiva quadra){

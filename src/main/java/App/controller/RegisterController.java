@@ -16,8 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
-import java.util.List;
-
 public class RegisterController extends Controller{
 
     ControllerHelper helper = new ControllerHelper();
@@ -48,10 +46,10 @@ public class RegisterController extends Controller{
     private PasswordField input_senha;
 
     @FXML
-    private Label label_cpf_cnpj;
+    private Label label_doc1;
 
     @FXML
-    private TextField input_cpf_cnpj;
+    private TextField input_doc1;
 
     @FXML
     public void initialize() {
@@ -77,17 +75,17 @@ public class RegisterController extends Controller{
         String email = input_email.getText();
         String senha = input_senha.getText();
         String tipoUsuario = choice_tipoUsuario.getValue();
-        String cpfCnpj = input_cpf_cnpj.getText();
-        if (nome == null || email == null || senha == null || tipoUsuario == null || cpfCnpj == null) {
+        String doc1 = input_doc1.getText();
+        if (nome == null || email == null || senha == null || tipoUsuario == null || doc1 == null) {
             System.out.println("Todos os campos aqui são obrigatórios...");
-        } else if(tipoUsuario == "locador") {
-            Locador locador = new Locador(nome, email, senha, tipoUsuario, cpfCnpj);
+        } else if(tipoUsuario.equals("locador")) {
+            Locador locador = new Locador(nome, email, senha, tipoUsuario, doc1);
             LocadorRepository repository = new LocadorRepository();
             repository.addLocador(locador);
             Stage currentStage = (Stage) btn_registrar.getScene().getWindow();
             helper.loadScene("/login.fxml", currentStage);
-        }else if(tipoUsuario == "locatário"){
-            Locatario locatario = new Locatario(nome, email, senha, tipoUsuario, cpfCnpj);
+        }else if(tipoUsuario.equals("locatário")){
+            Locatario locatario = new Locatario(nome, email, senha, tipoUsuario, doc1);
             LocatarioRepository repository = new LocatarioRepository();
             repository.addLocatario(locatario);
             Stage currentStage = (Stage) btn_registrar.getScene().getWindow();
@@ -95,7 +93,7 @@ public class RegisterController extends Controller{
         }
 
         // Adicione a lógica para processar os dados do registro aqui
-        System.out.println("Registrando usuário: " + nome + ", " + email + ", " + senha + ", " + tipoUsuario + ", " + cpfCnpj);
+        System.out.println("Registrando usuário: " + nome + ", " + email + ", " + senha + ", " + tipoUsuario + ", " + doc1);
     }
 
     @FXML
@@ -103,17 +101,17 @@ public class RegisterController extends Controller{
         String tipoSelecionado = choice_tipoUsuario.getValue();
 
         if ("locatário".equals(tipoSelecionado)) {
-            label_cpf_cnpj.setText("CPF:");
-            label_cpf_cnpj.setVisible(true);
-            input_cpf_cnpj.setVisible(true);
+            label_doc1.setText("CPF:");
+            label_doc1.setVisible(true);
+            input_doc1.setVisible(true);
         } else if ("locador".equals(tipoSelecionado)) {
-            label_cpf_cnpj.setText("CNPJ:");
-            label_cpf_cnpj.setVisible(true);
-            input_cpf_cnpj.setVisible(true);
+            label_doc1.setText("CNPJ:");
+            label_doc1.setVisible(true);
+            input_doc1.setVisible(true);
         } else {
             // Caso não seja selecionado nenhum tipo, oculta o campo
-            label_cpf_cnpj.setText("");
-            input_cpf_cnpj.setVisible(false);
+            label_doc1.setText("");
+            input_doc1.setVisible(false);
         }
     }
 }
