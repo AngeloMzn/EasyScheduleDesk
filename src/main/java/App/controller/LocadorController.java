@@ -8,12 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
@@ -45,13 +40,13 @@ public class LocadorController extends Controller{
     private Label login_tittle;
 
     @FXML
-    private TextField search_id;
+    private TextField search_txt;
 
     @FXML
-    private TextField search_nome;
+    private Button btn_search;
 
     @FXML
-    private TextField search_tipo;
+    private ChoiceBox<String> search_opt;
 
     @FXML
     private TableView<QuadraEsportiva> table_quadras;
@@ -82,6 +77,29 @@ public class LocadorController extends Controller{
 
     @FXML
     public void initialize() {
+
+        // Popular a tabela com os dados
+        initColums();
+        quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
+        loadPage();
+
+        search_opt.getItems().addAll("ID", "Nome", "Tipo");
+        search_opt.setValue("Nome");
+        btn_search.setOnAction(event -> {
+            search();
+        });
+        search_txt.setOnAction(event -> {
+            search();
+        });
+
+
+        // Popular a tabela com os dados
+//        quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
+//        table_quadras.setItems(quadrasList);
+    }
+
+    @FXML
+    public void initColums(){
         quadra_cell_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nome_cell_id.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tipo_cell_id.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -100,11 +118,8 @@ public class LocadorController extends Controller{
             return value;
         });
         dono_cell_id.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        // Popular a tabela com os dados
-        quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
-        table_quadras.setItems(quadrasList);
     }
+
     @FXML
     public void deletarQuadra() {
         QuadraEsportiva quadraSelecionada = table_quadras.getSelectionModel().getSelectedItem();
@@ -136,5 +151,76 @@ public class LocadorController extends Controller{
     public void novaQuadra() {
         Stage currentStage = (Stage) btn_add_quadra.getScene().getWindow();
         helper.loadScene("/cadastrar_quadra.fxml", currentStage);
+    }
+
+    @FXML
+    public void loadPage() {
+        table_quadras.setItems(quadrasList);
+        table_quadras.refresh();
+    }
+
+    @FXML
+    public void search() {
+        String search_txt = this.search_txt.getText();
+        String search_opt = this.search_opt.getValue();
+
+        // Check for empty search
+        if (search_txt.isEmpty()) {
+            quadrasList.setAll(quadraRepository.listarTodasAsQuadras());
+            return;
+        }
+
+        // Sanity check SQL injection on search
+        if (search_txt.contains(";") || search_txt.contains("DROP") || search_txt.contains("DELETE") ||
+                search_txt.contains("UPDATE") || search_txt.contains("INSERT")) {
+            System.out.println("Invalid search query.");
+            return;
+        }
+
+        // Check if search_opt is null
+        if (search_opt == null) {
+            System.out.println("No search option selected.");
+            return;
+        }
+
+        try {
+            switch (search_opt) {
+                case "ID":
+                    quadrasList.clear();
+                    int id = Integer.parseInt(search_txt);
+                    quadrasList.addAll(quadraRepository.buscarQuadraPorId(id));
+                    break;
+                case "Nome":
+                    quadrasList.clear();
+                    quadrasList.addAll(quadraRepository.buscarQuadrasPorNome(search_txt));
+                    break;
+                case "Tipo":
+                    quadrasList.clear();
+                    quadrasList.addAll(quadraRepository.buscarQuadrasPorTipo(search_txt));
+                    break;
+//            case "Dono":
+//                quadrasList.clear();
+//                quadrasList.addAll(quadraRepository.buscarQuadrasPorDono(search_txt));
+//                break;
+                default:
+                    System.out.println("Invalid search option.");
+                    quadrasList.clear();
+                    break;
+            }
+
+            // Check if the search returned any results
+            if (quadrasList.isEmpty()) {
+                System.out.println("No results found.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID format.");
+            quadrasList.clear();
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            quadrasList.clear();
+        }
+
+        loadPage();
     }
 }
