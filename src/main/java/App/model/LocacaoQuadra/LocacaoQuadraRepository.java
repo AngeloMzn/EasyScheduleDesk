@@ -1,5 +1,6 @@
 package App.model.LocacaoQuadra;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class LocacaoQuadraRepository {
@@ -19,6 +20,14 @@ public class LocacaoQuadraRepository {
     public LocacaoQuadra buscarLocacaoPorId(int id){
 
         return dao.buscarLocacaoPorId(id);
+    }
+    public List<LocacaoQuadra> buscarLocacaoPorQuadraId(int quadraId){
+
+        return dao.buscarLocacaoPorQuadraId(quadraId);
+    }
+    public LocacaoQuadra buscarPorHorario(int idQuadra, LocalDate data, String horaInicio, String horaFim){
+
+        return dao.buscarPorHorario(idQuadra,data,horaInicio,horaFim);
     }
     public List<LocacaoQuadra> listarTodasAsLocacoes(){
 

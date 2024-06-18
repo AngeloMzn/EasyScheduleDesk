@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,77 @@ public class LocacaoQuadraDAO {
                         quadra,
                         locatario,
                         resultSet.getObject("data", LocalDateTime.class),
+                        resultSet.getString("horaInicio"),
+                        resultSet.getString("horaFim")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locacao;
+    }
+    public List<LocacaoQuadra> buscarLocacaoPorQuadraId(int quadraId) {
+        String sql = "SELECT * FROM locacaoquadra WHERE id_QuadraEsportiva = ?";
+        List<LocacaoQuadra> locacoes = new ArrayList<>();
+
+        try (Connection connection = databaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, quadraId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
+                QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
+
+                LocatarioDAO locatarioDAO = new LocatarioDAO();
+                Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
+
+                LocacaoQuadra locacao = new LocacaoQuadra(
+                        quadra,
+                        locatario,
+                        resultSet.getObject("data", LocalDateTime.class),
+                        resultSet.getString("horaInicio"),
+                        resultSet.getString("horaFim")
+                );
+                locacoes.add(locacao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locacoes;
+    }
+    public LocacaoQuadra buscarPorHorario(int idQuadra, LocalDate data, String horaInicio, String horaFim) {
+        String sql = "SELECT * FROM locacaoquadra WHERE id_QuadraEsportiva = ? AND data = ? AND ((horaInicio <= ? AND horaFim >= ?) OR (horaInicio >= ? AND horaInicio <= ?))";
+        LocacaoQuadra locacao = null;
+
+        try (Connection connection = databaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, idQuadra);
+            statement.setDate(2, java.sql.Date.valueOf(data));
+            statement.setString(3, horaFim);
+            statement.setString(4, horaInicio);
+            statement.setString(5, horaInicio);
+            statement.setString(6, horaFim);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
+                QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
+
+                LocatarioDAO locatarioDAO = new LocatarioDAO();
+                Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
+
+                locacao = new LocacaoQuadra(
+                        quadra,
+                        locatario,
+                        LocalDateTime.from(resultSet.getObject("data", LocalDate.class)),
                         resultSet.getString("horaInicio"),
                         resultSet.getString("horaFim")
                 );
