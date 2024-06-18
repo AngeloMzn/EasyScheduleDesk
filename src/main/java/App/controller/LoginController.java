@@ -49,6 +49,10 @@ public class LoginController extends Controller{
             Stage currentStage = (Stage) btn_goto_register.getScene().getWindow();
             helper.loadScene("/register.fxml", currentStage);
         });
+
+        input_senha_login.setOnAction(event -> {
+            logar(event);
+        });
     }
 
     @FXML
