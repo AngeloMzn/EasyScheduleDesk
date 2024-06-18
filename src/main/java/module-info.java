@@ -13,4 +13,19 @@ module main.java.easyschedule {
 
     opens App.controller to javafx.fxml;
     exports App.controller;
+
+    opens App.model.LocacaoQuadra to javafx.base, javafx.fxml;
+    exports App.model.LocacaoQuadra;
+
+    opens App.model.Locador to javafx.base, javafx.fxml;
+    exports App.model.Locador;
+
+    opens App.model.Locatario to javafx.base, javafx.fxml;
+    exports App.model.Locatario;
+
+    opens App.model.QuadraEsportiva to javafx.base, javafx.fxml;
+    exports App.model.QuadraEsportiva;
+
+    opens App.model.Usuario to javafx.base, javafx.fxml;
+    exports App.model.Usuario;
 }
