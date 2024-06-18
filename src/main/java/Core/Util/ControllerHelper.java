@@ -21,7 +21,9 @@ public class ControllerHelper {
             Parent root = fxmlLoader.load();
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            stage.setMinWidth(800);
+            stage.setMinHeight(600);
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
 
             // Fechar a janela anterior (opcional)
@@ -54,8 +56,10 @@ public class ControllerHelper {
                 stage.close();
             }
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 800, 600);
             Stage editStage = new Stage();
+            editStage.setMinWidth(800);
+            editStage.setMinHeight(600);
             editStage.setScene(scene);
             editStage.setTitle("Quadra Esportiva");
             editStage.initOwner(stage);
