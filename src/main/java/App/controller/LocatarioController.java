@@ -15,6 +15,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LocatarioController extends Controller{
@@ -140,16 +141,16 @@ public class LocatarioController extends Controller{
         int fromIndex = pagination.getCurrentPageIndex() * 10;
         int toIndex = Math.min(fromIndex + 10, quadrasList.size());
         table_quadras.setItems(FXCollections.observableArrayList(quadrasList.subList(fromIndex, toIndex)));
+        table_quadras.refresh();
     }
 
 
     @FXML
-    public void search(){
-        
+    public void search() {
         String search_txt = this.search_txt.getText();
         String search_opt = this.search_opt.getValue();
 
-        //Check enpty search
+        // Check for empty search
         if (search_txt.isEmpty()) {
             quadrasList.setAll(quadraRepository.listarTodasAsQuadras());
             return;
@@ -162,23 +163,50 @@ public class LocatarioController extends Controller{
             return;
         }
 
-        ObservableList<QuadraEsportiva> searchResults = FXCollections.observableArrayList();
-        switch (search_opt) {
-            case "ID":
-                searchResults.addAll(quadraRepository.buscarQuadrasPorId(Integer.parseInt(search_txt)));
-                break;
-            case "Nome":
-                searchResults.addAll(quadraRepository.buscarQuadrasPorNome(search_txt));
-                break;
-            case "Tipo":
-                searchResults.addAll(quadraRepository.buscarQuadrasPorTipo(search_txt));
-                break;
-//            case "Dono":
-//                searchResults.addAll(quadraRepository.buscarQuadrasPorDono(search_txt));
-//                break;
-            default:
-                System.out.println("Invalid search option.");
-                break;
+        // Check if search_opt is null
+        if (search_opt == null) {
+            System.out.println("No search option selected.");
+            return;
         }
+
+        try {
+            switch (search_opt) {
+                case "ID":
+                    quadrasList.clear();
+                    int id = Integer.parseInt(search_txt);
+                    quadrasList.addAll(quadraRepository.buscarQuadrasPorId(id));
+                    break;
+                case "Nome":
+                    quadrasList.clear();
+                    quadrasList.addAll(quadraRepository.buscarQuadrasPorNome(search_txt));
+                    break;
+                case "Tipo":
+                    quadrasList.clear();
+                    quadrasList.addAll(quadraRepository.buscarQuadrasPorTipo(search_txt));
+                    break;
+//            case "Dono":
+//                quadrasList.clear();
+//                quadrasList.addAll(quadraRepository.buscarQuadrasPorDono(search_txt));
+//                break;
+                default:
+                    System.out.println("Invalid search option.");
+                    quadrasList.clear();
+                    break;
+            }
+
+            // Check if the search returned any results
+            if (quadrasList.isEmpty()) {
+                System.out.println("No results found.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID format.");
+            quadrasList.clear();
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            quadrasList.clear();
+        }
+
+        loadPage();
     }
 }
