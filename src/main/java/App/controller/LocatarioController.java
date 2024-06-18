@@ -104,6 +104,10 @@ public class LocatarioController extends Controller{
             search();
         });
 
+        search_txt.setOnAction(event -> {
+            search();
+        });
+
 
         //Botton pagination
         pagination = new Pagination((quadrasList.size() / 10 + 1), 0);
