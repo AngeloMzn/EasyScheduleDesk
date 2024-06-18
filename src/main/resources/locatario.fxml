@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" text="Locatario" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.LocatarioController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="370.0" prefWidth="600.0">
+               <center>
+                  <TableView fx:id="table_quadras" prefHeight="272.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="quadra_cell_id" prefWidth="46.0" text="#" />
+                      <TableColumn fx:id="nome_cell_id" prefWidth="104.0" text="Nome" />
+                        <TableColumn fx:id="tipo_cell_id" prefWidth="75.0" text="Tipo" />
+                        <TableColumn fx:id="preco_cell_id" prefWidth="75.0" text="Valor/hora" />
+                        <TableColumn fx:id="dono_cell_id" prefWidth="75.0" text="Prorietario" />
+                        <TableColumn fx:id="disponivel_cell_id" prefWidth="75.0" text="Disponivel" />
+                    </columns>
+                  </TableView>
+               </center>
+               <top>
+                  <HBox prefHeight="15.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ChoiceBox fx:id="search_opt" prefWidth="150.0" />
+                        <TextField fx:id="search_txt" />
+                        <Button fx:id="btn_search" mnemonicParsing="false" onAction="#search" text="Buscar" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <CheckBox fx:id="toggle_disponivel" mnemonicParsing="false" text="Disponivel">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="30.0" top="5.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </HBox>
+               </top>
+               <bottom>
+                  <SplitPane orientation="VERTICAL" BorderPane.alignment="CENTER">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="43.0" prefWidth="598.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <HBox fillHeight="false" layoutX="-3.0" layoutY="1.0" prefHeight="62.0" prefWidth="600.0">
+                                 <children>
+                                    <Pagination fx:id="pagination" pageCount="100">
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="10.0" />
+                                       </HBox.margin></Pagination>
+                                    <Button fx:id="btn_locar_quadra" mnemonicParsing="false" onAction="#locar" text="Locar">
+                                       <HBox.margin>
+                                          <Insets left="30.0" right="30.0" top="10.0" />
+                                       </HBox.margin></Button>
+                                    <Button fx:id="btn_visualizar" mnemonicParsing="false" text="Visualizar">
+                                       <HBox.margin>
+                                          <Insets left="30.0" right="30.0" top="10.0" />
+                                       </HBox.margin></Button>
+                                    <Button fx:id="btn_voltar" layoutX="448.0" layoutY="20.0" mnemonicParsing="false" text=" &lt;&lt; Voltar" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </bottom>
+            </BorderPane>
+         </children></AnchorPane>
+  </content>
+</TitledPane>
