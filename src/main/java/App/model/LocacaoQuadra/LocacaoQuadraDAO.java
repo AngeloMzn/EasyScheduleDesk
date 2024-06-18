@@ -63,7 +63,7 @@ public class LocacaoQuadraDAO {
                 locacao = new LocacaoQuadra(
                         quadra,
                         locatario,
-                        resultSet.getObject("data", LocalDateTime.class),
+                        resultSet.getObject("data", LocalDate.class),
                         resultSet.getString("horaInicio"),
                         resultSet.getString("horaFim")
                 );
@@ -95,7 +95,7 @@ public class LocacaoQuadraDAO {
                 LocacaoQuadra locacao = new LocacaoQuadra(
                         quadra,
                         locatario,
-                        resultSet.getObject("data", LocalDateTime.class),
+                        resultSet.getObject("data", LocalDate.class),
                         resultSet.getString("horaInicio"),
                         resultSet.getString("horaFim")
                 );
@@ -134,7 +134,7 @@ public class LocacaoQuadraDAO {
                 locacao = new LocacaoQuadra(
                         quadra,
                         locatario,
-                        LocalDateTime.from(resultSet.getObject("data", LocalDate.class)),
+                        LocalDate.from(resultSet.getObject("data", LocalDate.class)),
                         resultSet.getString("horaInicio"),
                         resultSet.getString("horaFim")
                 );
@@ -158,7 +158,7 @@ public class LocacaoQuadraDAO {
             while (resultSet.next()) {
                 int idQuadra = resultSet.getInt("id_QuadraEsportiva");
                 int idLocatario = resultSet.getInt("id_Locatario");
-                LocalDateTime data = resultSet.getObject("data", LocalDateTime.class);
+                LocalDate data = resultSet.getObject("data", LocalDate.class);
                 String horaInicio = resultSet.getString("horaInicio");
                 String horaFim = resultSet.getString("horaFim");
 

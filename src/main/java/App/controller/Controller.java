@@ -1,9 +1,13 @@
 package App.controller;
 
+import java.util.Map;
+
 public abstract class  Controller {
     public Controller(){}
 
-    public void initData(int idQuadra) {
+    public void initData(Map<String, Object> idQuadra) {
 
     }
+
+
 }

@@ -5,10 +5,12 @@ import App.controller.EditarQuadraController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class ControllerHelper {
 
@@ -39,14 +41,14 @@ public class ControllerHelper {
         }
     }
 
-    public void loadWithParams(int idQuadra, Stage stage, String fxml) {
+    public void loadWithParams(Stage stage, String fxml, Map<String, Object> params) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
 
             Controller controller = loader.getController();
-
-            controller.initData(idQuadra);
+            // Passando o mapa de parâmetros para o controlador
+            controller.initData(params);
 
             if (stage != null) {
                 stage.close();
@@ -62,7 +64,6 @@ public class ControllerHelper {
             e.printStackTrace();
         }
     }
-
     public  boolean isNull(List<?> lista) {
         if (lista == null || lista.isEmpty()) {
             return true;
@@ -74,4 +75,14 @@ public class ControllerHelper {
         }
         return false;
     }
+
+
+    public void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }

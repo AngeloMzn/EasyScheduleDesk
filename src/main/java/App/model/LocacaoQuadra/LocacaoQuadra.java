@@ -4,16 +4,17 @@ import App.model.Locatario.Locatario;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LocacaoQuadra {
     int id;
     QuadraEsportiva quadra;
     Locatario locatario;
-    LocalDateTime data;
+    LocalDate data;
     String horaInicio;
     String horaFim;
-    public LocacaoQuadra(QuadraEsportiva quadra, Locatario locatario, LocalDateTime data, String horaInicio, String horaFim) {
+    public LocacaoQuadra(QuadraEsportiva quadra, Locatario locatario, LocalDate data, String horaInicio, String horaFim) {
         if (quadra.isDisponivel() == 0) {
             throw new IllegalArgumentException("A quadra não está disponível para locação.");
         }
@@ -48,11 +49,11 @@ public class LocacaoQuadra {
         this.locatario = locatario;
     }
 
-    public LocalDateTime getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

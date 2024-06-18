@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class LoginController extends Controller{
@@ -60,12 +62,14 @@ public class LoginController extends Controller{
             System.out.println("Logado !!");
             Stage currentStage = (Stage) btn_login.getScene().getWindow();
             if (user.getTipoUsuario().equals("locatário")) {
-                helper.loadScene("/locatario.fxml", currentStage);
+                Map<String, Object> params = new HashMap<>();
+                params.put("locatarioId", user.getId());
+                helper.loadWithParams(currentStage,"/locatario.fxml", params);
             } else {
                 helper.loadScene("/locador.fxml", currentStage);
             }
         } else {
-            System.out.println("Credenciais inválidas!");
+            helper.showAlert("Erro:","Credenciais inválidas!");
         }
     }
 

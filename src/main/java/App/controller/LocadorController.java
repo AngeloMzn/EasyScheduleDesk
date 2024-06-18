@@ -18,6 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LocadorController extends Controller{
 
     private ControllerHelper helper = new ControllerHelper();
@@ -118,7 +121,9 @@ public class LocadorController extends Controller{
         int idQuadraSelecionada = quadraSelecionada.getId();
         if (idQuadraSelecionada != 0) {
             Stage currentStage = (Stage) btn_edit_quadra.getScene().getWindow();
-            helper.loadWithParams(idQuadraSelecionada, currentStage, "/editar_quadra.fxml");
+            Map<String, Object> params = new HashMap<>();
+            params.put("idQuadra", idQuadraSelecionada);
+            helper.loadWithParams(currentStage, "/editar_quadra.fxml", params);
         }
     }
 

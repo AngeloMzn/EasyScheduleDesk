@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EditarQuadraController extends Controller {
@@ -95,8 +96,8 @@ public class EditarQuadraController extends Controller {
         }
     }
     @Override
-    public void initData(int idQuadra) {
-        this.idQuadra = idQuadra;
+    public void initData(Map<String, Object> params) {
+        this.idQuadra = (int) params.get("idQuadra");
         QuadraEsportivaRepository quadraEsportivaRepository = new QuadraEsportivaRepository();
         quadra = quadraEsportivaRepository.buscarQuadraPorId(idQuadra);
 

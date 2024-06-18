@@ -49,9 +49,5 @@ public class LocarQuadraController extends Controller{
         helper.loadScene("/locatario.fxml", currentStage);
     }
 
-    @Override
-    public void initData(int idQuadra) {
-        this.idQuadra = idQuadra;
 
-    }
 }
