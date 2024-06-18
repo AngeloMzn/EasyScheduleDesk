@@ -10,12 +10,9 @@ public class LocacaoQuadraRepository {
         this.dao = new LocacaoQuadraDAO();
     }
 
-    public void adicionarLocacao(LocacaoQuadra locacaoQuadra){
+    public Boolean adicionarLocacao(LocacaoQuadra locacaoQuadra){
 
-        String response = dao.adicionarLocacao(locacaoQuadra);
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.adicionarLocacao(locacaoQuadra);
     }
     public LocacaoQuadra buscarLocacaoPorId(int id){
 
@@ -33,12 +30,9 @@ public class LocacaoQuadraRepository {
 
         return dao.listarTodasAsLocacoes();
     }
-    public void atualizarLocacao(LocacaoQuadra locacao){
+    public Boolean atualizarLocacao(LocacaoQuadra locacao){
 
-        String response = dao.adicionarLocacao(locacao);
-        if(!response.isEmpty()){
-            System.out.println(response);
-        }
+        return dao.adicionarLocacao(locacao);
     }
     public void deletarLocacao(int id){
 

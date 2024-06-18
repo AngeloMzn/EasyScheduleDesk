@@ -15,7 +15,7 @@ public class QuadraEsportivaRepository {
             System.out.println(response);
         }
     }
-    public QuadraEsportiva buscarQuadrasPorId(int id){
+    public QuadraEsportiva buscarQuadraPorId(int id){
 
         return dao.buscarQuadraPorId(id);
 

@@ -7,15 +7,12 @@ import Core.Util.ControllerHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LocatarioController extends Controller{
@@ -78,15 +75,8 @@ public class LocatarioController extends Controller{
     @FXML
     public void initialize() {
 
-        initColums();
-
-//        disponivel_cell_id.setCellValueFactory(cellData -> {
-//            int disponivel = cellData.getValue().isDisponivel();
-//            return new SimpleStringProperty(disponivel == 1 ? "Sim" : "Não");
-//        });
-
-
         // Popular a tabela com os dados
+        initColums();
         quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
         loadPage();
 
@@ -130,14 +120,12 @@ public class LocatarioController extends Controller{
         QuadraEsportiva selectedQuadra = table_quadras.getSelectionModel().getSelectedItem();
         int idQuadraSelecionada = selectedQuadra.getId();
 
-        System.out.println("idQuadraSelecionada: " + idQuadraSelecionada);
-
         if (idQuadraSelecionada != 0) {
             Stage currentStage = (Stage) btn_locar_quadra.getScene().getWindow();
             Map<String, Object> params = new HashMap<>();
             params.put("quadraId", idQuadraSelecionada);
             params.put("locatarioId", locatarioId);
-//            helper.loadWithParams(currentStage, "/locar_quadra.fxml", params);
+            helper.loadWithParams(currentStage, "/locar_quadra.fxml", params);
         } else {
             System.out.println("No Quadra selected.");
         }
@@ -149,7 +137,13 @@ public class LocatarioController extends Controller{
         nome_cell_id.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tipo_cell_id.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         preco_cell_id.setCellValueFactory(new PropertyValueFactory<>("precoPorHora"));
-        dono_cell_id.setCellValueFactory(new PropertyValueFactory<>("dono"));
+
+        //Adiciona dono nome
+        dono_cell_id.setCellValueFactory(cellData -> {
+            String dono = cellData.getValue().getDono().getNome();
+            return new SimpleStringProperty(dono);
+        });
+
         disponivel_cell_id.setCellValueFactory(cellData -> {
             int disponivel = cellData.getValue().isDisponivel();
             return new SimpleStringProperty(disponivel == 1 ? "Sim" : "Não");
@@ -193,7 +187,7 @@ public class LocatarioController extends Controller{
                 case "ID":
                     quadrasList.clear();
                     int id = Integer.parseInt(search_txt);
-                    quadrasList.addAll(quadraRepository.buscarQuadrasPorId(id));
+                    quadrasList.addAll(quadraRepository.buscarQuadraPorId(id));
                     break;
                 case "Nome":
                     quadrasList.clear();

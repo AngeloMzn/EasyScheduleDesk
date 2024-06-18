@@ -99,7 +99,7 @@ public class EditarQuadraController extends Controller {
     public void initData(Map<String, Object> params) {
         this.idQuadra = (int) params.get("idQuadra");
         QuadraEsportivaRepository quadraEsportivaRepository = new QuadraEsportivaRepository();
-        quadra = quadraEsportivaRepository.buscarQuadrasPorId(idQuadra);
+        quadra = quadraEsportivaRepository.buscarQuadraPorId(idQuadra);
 
         // Set initial values for input fields
         input_nome_quadra.setText(quadra.getNome());

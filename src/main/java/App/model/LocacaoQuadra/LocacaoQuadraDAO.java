@@ -24,7 +24,7 @@ public class LocacaoQuadraDAO {
         databaseConfig = new DatabaseConfig();
     }
 
-    public String adicionarLocacao(LocacaoQuadra locacao) {
+    public Boolean adicionarLocacao(LocacaoQuadra locacao) {
         String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, data, horaInicio, horaFim) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = databaseConfig.getConnection();
@@ -36,10 +36,12 @@ public class LocacaoQuadraDAO {
             statement.setString(5, locacao.getHoraInicio());
             statement.setString(6, locacao.getHoraFim());
             statement.executeUpdate();
-            return "Locação salva com sucesso!";
+            System.out.println("Locação salva com sucesso!");
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return "Erro ao salvar locação: " + e.getMessage();
+            System.out.println("Erro ao salvar locação: " + e.getMessage());
+            return false;
         }
     }
 
