@@ -17,6 +17,10 @@ public class LocacaoQuadraRepository {
             System.out.println(response);
         }
     }
+
+    public List<LocacaoQuadra> buscarLocacoesPorLocatario(int locatarioId){
+        return dao.buscarLocacoesPorLocatario(locatarioId);
+    }
     public LocacaoQuadra buscarLocacaoPorId(int id){
 
         return dao.buscarLocacaoPorId(id);
@@ -40,11 +44,12 @@ public class LocacaoQuadraRepository {
             System.out.println(response);
         }
     }
-    public void deletarLocacao(int id){
+    public String deletarLocacao(int id){
 
         String response = String.valueOf(dao.deletarLocacao(id));
         if(!response.isEmpty()){
-            System.out.println(response);
+           return response;
         }
+        return "Erro: Não foi possivel cancelar";
     }
 }

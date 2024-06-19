@@ -72,7 +72,7 @@ public class LocatarioDAO {
     }
 
     public Locatario getLocatarioByUserId(int id) {
-        String sql = "SELECT u.id, u.nome, u.email, u.password, u.tipoUsuario, l.CPF " +
+        String sql = "SELECT u.id AS userId, u.nome, u.email, u.password, u.tipoUsuario, l.CPF, l.id AS locatarioId " +
                 "FROM locatario l " +
                 "JOIN usuario u ON l.id_Usuario = u.id " +
                 "WHERE l.id_Usuario = ?";
@@ -92,7 +92,8 @@ public class LocatarioDAO {
                             rs.getString("tipoUsuario"),
                             rs.getString("CPF")
                     );
-                    locatario.setId(rs.getInt("id"));
+                    locatario.setUserId(rs.getInt("userId"));
+                    locatario.setId(rs.getInt("locatarioId"));
                 }
             }
         } catch (SQLException e) {
@@ -131,6 +132,39 @@ public class LocatarioDAO {
 
         return locatarios;
     }
+
+    public Locatario buscarUsuarioLocatario(int userId) {
+        String sql = "SELECT u.id AS userId, u.nome, u.email, u.password, u.tipoUsuario, l.CPF, l.id AS locatarioId " +
+                "FROM locatario l " +
+                "JOIN usuario u ON l.id_Usuario = u.id " +
+                "WHERE l.id_Usuario = ?";
+        Locatario locatario = null;
+
+        try (Connection conn = databaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    locatario = new Locatario(
+                            rs.getString("nome"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("tipoUsuario"),
+                            rs.getString("CPF")
+                    );
+                    locatario.setUserId(rs.getInt("userId"));
+                    locatario.setId(rs.getInt("locatarioId"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locatario;
+    }
+
 
     public String updateLocatario(Locatario locatario) {
         String sql = "UPDATE locatario SET id_Usuario = ?, CPF = ? WHERE id = ?";

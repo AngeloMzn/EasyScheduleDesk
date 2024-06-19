@@ -81,10 +81,12 @@ public class LocacaoQuadra {
     @Override
     public String toString() {
         return "LocacaoQuadra{" +
-                "quadra=" + quadra +
-                ", locatario='" + locatario + '\'' +
-                ", dataHoraInicio=" + data +
-                //", valor=" + calcularValor() +
+                "id=" + this.id +
+                "quadra=" + quadra.getId() +
+                ", locatario='" + locatario.getId() + '\'' +
+                ", data=" + data +
+                "horaInicio = " + this.horaInicio +
+                "horaFim = " + this.horaFim +
                 '}';
     }
 

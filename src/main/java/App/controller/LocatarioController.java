@@ -1,6 +1,8 @@
 package App.controller;
 
 
+import App.model.Locatario.Locatario;
+import App.model.Locatario.LocatarioRepository;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 import App.model.QuadraEsportiva.QuadraEsportivaRepository;
 import Core.Util.ControllerHelper;
@@ -14,9 +16,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LocatarioController extends Controller{
 
     ControllerHelper helper = new ControllerHelper();
+    int locatarioId;
+    Locatario locatario;
 
     @FXML
     private Button btn_locar_quadra;
@@ -90,6 +97,8 @@ public class LocatarioController extends Controller{
         // Popular a tabela com os dados
         quadrasList.addAll(quadraRepository.listarTodasAsQuadras());
         table_quadras.setItems(quadrasList);
+
+        this.locatario = getLocatario();
     }
 
     @FXML
@@ -103,11 +112,31 @@ public class LocatarioController extends Controller{
         QuadraEsportiva selectedQuadra = table_quadras.getSelectionModel().getSelectedItem();
         if (selectedQuadra != null) {
             int quadraId = selectedQuadra.getId();
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("quadraId", quadraId);
+            params.put("locatarioId", this.locatarioId);
             Stage currentStage = (Stage) btn_locar_quadra.getScene().getWindow();
-            helper.loadWithParams(quadraId, currentStage, "/locar_quadra.fxml");
+            helper.loadWithParams(currentStage, "/locar_quadra.fxml", params);
         } else {
             System.out.println("No Quadra selected.");
         }
     }
 
+    @FXML
+    public void visualizar(){
+        QuadraEsportiva selectedQuadra = table_quadras.getSelectionModel().getSelectedItem();
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("locatarioId", this.locatarioId);
+        Stage currentStage = (Stage) btn_visualizar.getScene().getWindow();
+        helper.loadWithParams(currentStage, "/locacaoQuadra.fxml", params);
+    }
+    Locatario getLocatario(){
+        LocatarioRepository rep = new LocatarioRepository();
+        return rep.getLocatarioByUserId(this.locatarioId);
+    }
+
+    @Override
+    public void initData(Map<String, Object> params) {
+        this.locatarioId = (int) params.get("locatarioId");
+    }
 }

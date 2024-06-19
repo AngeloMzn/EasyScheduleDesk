@@ -1,7 +1,7 @@
 package App.model.Usuario;
 
 public abstract class Usuario {
-    protected int id;
+    protected int userId;
     protected String nome;
     protected String email;
     protected String password;
@@ -14,12 +14,12 @@ public abstract class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getNome() {

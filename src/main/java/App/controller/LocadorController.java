@@ -137,4 +137,10 @@ public class LocadorController extends Controller{
         Stage currentStage = (Stage) btn_add_quadra.getScene().getWindow();
         helper.loadScene("/cadastrar_quadra.fxml", currentStage);
     }
+
+    @FXML
+    public void visualizar(){
+        Stage currentStage = (Stage) btn_add_quadra.getScene().getWindow();
+        helper.loadScene("/locacaoQuadraLocador.fxml", currentStage);
+    }
 }

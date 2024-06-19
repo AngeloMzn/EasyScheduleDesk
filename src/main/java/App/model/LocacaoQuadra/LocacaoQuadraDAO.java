@@ -4,6 +4,7 @@ import App.model.Locatario.LocatarioDAO;
 import App.model.QuadraEsportiva.QuadraEsportiva;
 import App.model.QuadraEsportiva.QuadraEsportivaDAO;
 import App.model.Usuario.Usuario;
+import App.model.Usuario.UsuarioDAO;
 import Core.Config.DatabaseConfig;
 import App.model.Locatario.Locatario;
 
@@ -25,16 +26,16 @@ public class LocacaoQuadraDAO {
     }
 
     public String adicionarLocacao(LocacaoQuadra locacao) {
-        String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, data, horaInicio, horaFim) VALUES (?, ?, ?, ?)";
-
+        String sql = "INSERT INTO locacaoquadra (id_QuadraEsportiva, id_Locatario, data, horaInicio, horaFim) VALUES (?, ?, ?, ?, ?)";
+        System.out.println("locatarioid nmo DAO:" + locacao.getLocatario().getId());
         try (Connection connection = databaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, locacao.getQuadra().getId());
             statement.setInt(2, locacao.getLocatario().getId());
             statement.setObject(3, locacao.getData());
-            statement.setString(5, locacao.getHoraInicio());
-            statement.setString(6, locacao.getHoraFim());
+            statement.setString(4, locacao.getHoraInicio());
+            statement.setString(5, locacao.getHoraFim());
             statement.executeUpdate();
             return "Locação salva com sucesso!";
         } catch (SQLException e) {
@@ -109,7 +110,7 @@ public class LocacaoQuadraDAO {
         return locacoes;
     }
     public LocacaoQuadra buscarPorHorario(int idQuadra, LocalDate data, String horaInicio, String horaFim) {
-        String sql = "SELECT * FROM locacaoquadra WHERE id_QuadraEsportiva = ? AND data = ? AND ((horaInicio <= ? AND horaFim >= ?) OR (horaInicio >= ? AND horaInicio <= ?))";
+        String sql = "SELECT * FROM locacaoquadra WHERE id_QuadraEsportiva = ? AND data = ? AND ((horaInicio <= ? AND horaFim > ?) OR (horaInicio >= ? AND horaInicio <= ?))";
         LocacaoQuadra locacao = null;
 
         try (Connection connection = databaseConfig.getConnection();
@@ -147,6 +148,41 @@ public class LocacaoQuadraDAO {
         return locacao;
     }
 
+    public List<LocacaoQuadra> buscarLocacoesPorLocatario(int locatarioId) {
+        System.out.println("no DAO: " +locatarioId);
+        String sql = "SELECT * FROM locacaoquadra WHERE id_Locatario = ?";
+        List<LocacaoQuadra> locacoes = new ArrayList<>();
+
+        try (Connection connection = databaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, locatarioId);
+            ResultSet resultSet = statement.executeQuery();
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            Locatario locatario = usuarioDAO.buscarUsuarioLocatario(locatarioId);
+            System.out.println(locatario);
+
+            while (resultSet.next()) {
+                QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
+                QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
+                LocacaoQuadra locacao = new LocacaoQuadra(
+                        quadra,
+                        locatario,
+                        LocalDate.from(resultSet.getObject("data", LocalDate.class)),
+                        resultSet.getString("horaInicio"),
+                        resultSet.getString("horaFim")
+                );
+                locacoes.add(locacao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locacoes;
+    }
+
     public List<LocacaoQuadra> listarTodasAsLocacoes() {
         String sql = "SELECT * FROM locacaoquadra";
         List<LocacaoQuadra> locacoes = new ArrayList<>();
@@ -165,10 +201,12 @@ public class LocacaoQuadraDAO {
                 QuadraEsportivaDAO quadraDao = new QuadraEsportivaDAO();
                 QuadraEsportiva quadra = quadraDao.buscarQuadraPorId(resultSet.getInt("id_QuadraEsportiva"));
 
-                LocatarioDAO locatarioDAO = new LocatarioDAO();
-                Locatario locatario = locatarioDAO.getLocatarioByUserId(resultSet.getInt("id_Locatario"));
+                // Aqui vamos buscar o Locatario diretamente pelo ID
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Locatario locatario = usuarioDAO.buscarUsuarioLocatario(idLocatario);
 
                 LocacaoQuadra locacao = new LocacaoQuadra(quadra, locatario, data, horaInicio, horaFim);
+                locacao.setId(resultSet.getInt("id"));
                 locacoes.add(locacao);
             }
 
@@ -178,6 +216,7 @@ public class LocacaoQuadraDAO {
 
         return locacoes;
     }
+
 
     public String atualizarLocacao(LocacaoQuadra locacao) {
         String sql = "UPDATE locacaoquadra SET id_QuadraEsportiva = ?, id_Locatario = ?, data = ?, horaInicio = ?, horaFim = ? WHERE id = ?";
@@ -215,3 +254,9 @@ public class LocacaoQuadraDAO {
     }
 }
 
+class TestLocacaoQuadraDAO{
+    public static void main(String[] args) {
+        List<LocacaoQuadra> list = (new LocacaoQuadraDAO().listarTodasAsLocacoes());
+        System.out.println(list);
+    }
+}

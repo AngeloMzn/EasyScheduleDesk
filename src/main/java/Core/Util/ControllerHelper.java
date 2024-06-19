@@ -41,25 +41,21 @@ public class ControllerHelper {
         }
     }
 
-    public void loadWithParams(Stage stage, String fxml, Map<String, Object> params) {
+    public void loadWithParams(Stage currentStage, String fxml, Map<String, Object> params) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
 
             Controller controller = loader.getController();
-            // Passando o mapa de parâmetros para o controlador
             controller.initData(params);
 
-            if (stage != null) {
-                stage.close();
-            }
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
 
-            Scene scene = new Scene(root);
-            Stage editStage = new Stage();
-            editStage.setScene(scene);
-            editStage.setTitle("Quadra Esportiva");
-            editStage.initOwner(stage);
-            editStage.showAndWait();
+            if (currentStage != null) {
+                currentStage.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

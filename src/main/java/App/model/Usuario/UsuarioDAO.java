@@ -1,6 +1,7 @@
 package App.model.Usuario;
 
 import App.model.Locador.LocadorDAO;
+import App.model.Locatario.Locatario;
 import App.model.Locatario.LocatarioDAO;
 import Core.Config.DatabaseConfig;
 import App.model.Usuario.Usuario;
@@ -87,7 +88,6 @@ public class UsuarioDAO {
 
             if (resultSet.next()) {
                 String tipoUsuario = resultSet.getString("tipoUsuario");
-                System.out.println(tipoUsuario);
                 int id = resultSet.getInt("id");
                 if ("locatário".equalsIgnoreCase(tipoUsuario)) {
                     LocatarioDAO locatarioDAO = new LocatarioDAO();
@@ -144,7 +144,7 @@ public class UsuarioDAO {
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getPassword());
             statement.setString(4, usuario.getTipoUsuario());
-            statement.setInt(5, usuario.getId());
+            statement.setInt(5, usuario.getUserId());
             statement.executeUpdate();
             return "Usuário atualizado com sucesso!";
         } catch (SQLException e) {
@@ -152,6 +152,39 @@ public class UsuarioDAO {
             return "Erro ao atualizar usuário: " + e.getMessage();
         }
     }
+
+    public Locatario buscarUsuarioLocatario(int userId) {
+        String sql = "SELECT u.id AS userId, u.nome, u.email, u.password, u.tipoUsuario, l.CPF, l.id AS locatarioId " +
+                "FROM locatario l " +
+                "JOIN usuario u ON l.id_Usuario = u.id " +
+                "WHERE l.id = ?";
+        Locatario locatario = null;
+
+        try (Connection conn = databaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    locatario = new Locatario(
+                            rs.getString("nome"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("tipoUsuario"),
+                            rs.getString("CPF")
+                    );
+
+                    locatario.setUserId(rs.getInt("userId"));
+                    locatario.setId(rs.getInt("locatarioId"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locatario;
+    }
+
 
     public String deletarUsuario(int id) {
         String sql = "DELETE FROM usuario WHERE id = ?";
@@ -166,5 +199,13 @@ public class UsuarioDAO {
             e.printStackTrace();
             return "Erro ao deletar usuário: " + e.getMessage();
         }
+    }
+
+}
+
+class MainTest{
+    public static void main(String[] args) {
+        Usuario user = (new UsuarioDAO()).buscarUsuarioLocatario(3);
+        System.out.println(user);
     }
 }

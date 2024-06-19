@@ -63,7 +63,7 @@ public class LoginController extends Controller{
             Stage currentStage = (Stage) btn_login.getScene().getWindow();
             if (user.getTipoUsuario().equals("locatário")) {
                 Map<String, Object> params = new HashMap<>();
-                params.put("locatarioId", user.getId());
+                params.put("locatarioId", user.getUserId());
                 helper.loadWithParams(currentStage,"/locatario.fxml", params);
             } else {
                 helper.loadScene("/locador.fxml", currentStage);

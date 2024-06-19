@@ -75,9 +75,7 @@ public class QuadraEsportivaDAO {
                         resultSet.getInt("disponivel"),
                         locador
                 );
-                //quadra.setDisponivel(resultSet.getInt("disponivel"));
-                //quadra.setId(resultSet.getInt("id"));
-                //int idDono = resultSet.getInt("id_Locador");
+                quadra.setId(resultSet.getInt("quadraId"));
             }
 
         } catch (SQLException e) {
